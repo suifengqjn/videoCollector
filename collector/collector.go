@@ -42,17 +42,21 @@ func (c *Collector) Run() {
 
 func (c *Collector) DealVideos(video common.VideoModel) {
 
-	//check
+	//download check
 	pass := c.check(video)
 	if !pass {
 		return
 	}
 
+	// download
 	path, err := video.DownLoad()
 	if err == nil {
 		_=c.saveRecord(video)
 	}
 
 	fmt.Println(path)
+
+	//remove check
+	c.CheckRemove(video, path)
 
 }

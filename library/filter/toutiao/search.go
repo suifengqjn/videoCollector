@@ -24,7 +24,7 @@ func init() {
 
 	buf, err := ioutil.ReadFile(ckPath)
 	if err != nil {
-		panic(err)
+		fmt.Println(err)
 	}
 
 	ttCookie = request.ParseCookie(buf)

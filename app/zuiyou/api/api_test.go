@@ -2,9 +2,13 @@ package api
 
 import (
 	"fmt"
+	"myProject/videoCollector/common"
 	"testing"
 )
 
+func init() {
+	_ = common.ReadDebugConfig()
+}
 
 func TestGetFavorList(t *testing.T) {
 
@@ -13,12 +17,14 @@ func TestGetFavorList(t *testing.T) {
 }
 
 func TestGetFavorDetail(t *testing.T) {
-	GetFavorDetail(14496105)
+	GetFavorDetail(14496105, 12)
 }
 
 func TestGetAttentionUp(t *testing.T) {
 	res := GetAttentionUp()
-	println(res)
+	for _, r := range res {
+		fmt.Println(r.Title)
+	}
 }
 
 func TestGetRecommend(t *testing.T) {

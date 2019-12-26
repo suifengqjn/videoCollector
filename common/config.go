@@ -1,6 +1,9 @@
 package common
 
-import "github.com/BurntSushi/toml"
+import (
+	"github.com/BurntSushi/toml"
+	"os"
+)
 
 var conf *GlobalCon
 
@@ -10,7 +13,7 @@ type GlobalCon struct {
 	DBFile     string    `toml:"dbFile"`
 	BlackList  []string  `toml:"black_list"`
 	Proxy string	`toml:"proxy"`
-	Condition  Condition `toml:"condition"`
+	Condition  *Condition `toml:"condition"`
 	Zy         ZuiYou    `toml:"zy"`
 }
 
@@ -50,6 +53,19 @@ func ReadConfig()*GlobalCon  {
 	}
 
 	if _, err := toml.DecodeFile("./conf/config.toml", &conf); err != nil {
+		panic(err)
+	}
+
+	return conf
+
+}
+
+func ReadDebugConfig()*GlobalCon  {
+	if conf != nil {
+		return conf
+	}
+	path := os.ExpandEnv("$HOME")+ "/go/src/myProject/videoCollector/conf/config.toml"
+	if _, err := toml.DecodeFile(path, &conf); err != nil {
 		panic(err)
 	}
 

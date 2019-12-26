@@ -31,6 +31,16 @@ func (e *Engine)Fetch(queue *queue.Queue)  {
 
 	}
 
+	if e.conf.Zy.Recommend.Enable {
+
+		res := api.GetRecommend()
+
+		for _, r := range res {
+			queue.Push(r)
+		}
+
+	}
+
 	if e.conf.Zy.Attention.Enable {
 
 		res := api.GetAttentionUp()
@@ -41,15 +51,7 @@ func (e *Engine)Fetch(queue *queue.Queue)  {
 
 	}
 
-	if e.conf.Zy.Recommend.Enable {
 
-		res := api.GetRecommend()
-
-		for _, r := range res {
-			queue.Push(r)
-		}
-
-	}
 
 }
 
