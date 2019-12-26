@@ -3,7 +3,8 @@ package engine
 import (
 	yt "myProject/videoCollector/app/youtube"
 	zy "myProject/videoCollector/app/zuiyou"
-	"myProject/videoCollector/commom"
+	"myProject/videoCollector/collector"
+	"myProject/videoCollector/common"
 	"myTool/dataStruct/queue"
 	"time"
 )
@@ -15,18 +16,17 @@ type Fetcher interface {
 
 type Engine struct {
 	Apps      []Fetcher
-	Collector *commom.Collector
-	conf      *commom.GlobalCon
+	Collector *collector.Collector
+	conf      *common.GlobalCon
 }
 
-func NewEngine(conf *commom.GlobalCon) *Engine {
+func NewEngine(conf *common.GlobalCon) *Engine {
 
 	zy := zy.NewEngine(conf)
 	yt := yt.NewEngine(conf)
 	apps := []Fetcher{zy, yt}
 
-	collector := commom.NewCollector()
-
+	collector := collector.NewCollector()
 
 	return &Engine{
 		Apps:      apps,
@@ -41,9 +41,9 @@ func (e *Engine) Run() {
 	go e.work()
 	go e.Collector.Run()
 
-	c := time.Tick(time.Hour)
+	ticker := time.NewTicker(time.Hour)
 
-	for range c {
+	for range ticker.C {
 		h := time.Now().Hour()
 		if h >= 9 && h <= 21 {
 			e.work()

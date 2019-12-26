@@ -1,27 +1,22 @@
 package zuiyou
 
 import (
-	"myProject/videoCollector/commom"
+	"myProject/videoCollector/common"
 	"myTool/dataStruct/queue"
-	"time"
 )
 
 type Engine struct {
 
-	conf *commom.GlobalCon
+	conf *common.GlobalCon
 }
 
-func NewEngine(conf *commom.GlobalCon) *Engine  {
+func NewEngine(conf *common.GlobalCon) *Engine  {
 	return &Engine{conf:conf}
 }
 
 func (e *Engine)Fetch(queue *queue.Queue)  {
 
-	for {
-		time.Sleep(time.Second)
 
-		queue.Push(2)
-	}
 
 }
 

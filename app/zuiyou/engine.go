@@ -1,27 +1,54 @@
 package zuiyou
 
 import (
-	"myProject/videoCollector/commom"
+	"myProject/videoCollector/app/zuiyou/api"
+	"myProject/videoCollector/common"
 	"myTool/dataStruct/queue"
-	"time"
 )
 
 type Engine struct {
 
-	conf *commom.GlobalCon
+	conf *common.GlobalCon
 }
 
-func NewEngine(conf *commom.GlobalCon) *Engine  {
+func NewEngine(conf *common.GlobalCon) *Engine  {
 	return &Engine{conf:conf}
 }
 
 func (e *Engine)Fetch(queue *queue.Queue)  {
 
+	if !e.conf.Zy.Switch {
+		return
+	}
 
-	for {
-		time.Sleep(time.Second)
+	if e.conf.Zy.Favor.Enable {
 
-		queue.Push(1)
+		res := api.GetFavorList()
+
+		for _, r := range res {
+			queue.Push(r)
+		}
+
+	}
+
+	if e.conf.Zy.Attention.Enable {
+
+		res := api.GetAttentionUp()
+
+		for _, r := range res {
+			queue.Push(r)
+		}
+
+	}
+
+	if e.conf.Zy.Recommend.Enable {
+
+		res := api.GetRecommend()
+
+		for _, r := range res {
+			queue.Push(r)
+		}
+
 	}
 
 }

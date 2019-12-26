@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"myProject/videoCollector/commom"
+	"myProject/videoCollector/common"
 	"myProject/videoCollector/engine"
 	"os"
 	"os/signal"
@@ -12,14 +12,14 @@ import (
 func main() {
 
 
-	conf := commom.ReadConfig()
+	conf := common.ReadConfig()
 	fmt.Println(conf)
-	exitChan := make(chan struct{})
 
 	eng := engine.NewEngine(conf)
 
 	go func() {
 		sig := make(chan os.Signal, 1)
+
 		signal.Notify(sig, syscall.SIGINT, syscall.SIGTERM)
 		msg := <-sig
 
@@ -29,8 +29,6 @@ func main() {
 	}()
 
 	eng.Run()
-
-	<-exitChan
 
 
 }
