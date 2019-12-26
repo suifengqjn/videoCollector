@@ -15,19 +15,20 @@ proxy = "127.0.0.1:1086" # 替换自己的的代理地址
     similarity = 0.7 #视频相似度
 
 [zy]
-    switch = false
+    switch = true
     filter = ["t"]
-
+    cookie = "aliyungf_tc=AQAAAHtCl0+LAggALI70ctZO+UPzsFK8"
+    token = "T3K1NKOaZ14_QhiQ7KpL9TpjEQQrcm8nuAfDb80_l42mmiMS0c9F9oGokpDXXHCZhv4oO"
 
     [zy.favor]  #收藏
     group = ["素材"]
-    enable = false
+    enable = true
     limit = 20
 
     [zy.attention]  #关注
-    enable = false
+    enable = true
     limit = -1
 
     [zy.recommend]  #推荐
-    enable = false
+    enable = true
     limit = -1

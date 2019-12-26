@@ -2,24 +2,27 @@ package main
 
 import (
 	"fmt"
-	"log"
-	"os/user"
-	"path/filepath"
-
-	. "github.com/kkdai/youtube"
+	"goDemo/Project/ETHWallet/balance"
+	"time"
 )
 
 func main() {
 
-	usr, _ := user.Current()
-	currentDir := fmt.Sprintf("%v/Movies/youtubedr", usr.HomeDir)
-	log.Println("download to dir=", currentDir)
-	y := NewYoutube(true)
-	arg := "https://www.youtube.com/watch?v=aJOTlE1K90k"
-	if err := y.DecodeURL(arg); err != nil {
-		fmt.Println("err:", err)
+	Delta := 100 * time.Millisecond
+
+	for i := 0; i < 3; i++ {
+		ticker := time.NewTicker(Delta)
+		fmt.Println("1")
+		<-ticker.C
+		fmt.Println("2")
+		ticker.Stop()
 	}
-	if err := y.StartDownload(filepath.Join(currentDir, "dl.mp4")); err != nil {
-		fmt.Println("err:", err)
+
+	ticker2 := time.NewTicker(1 * time.Second)
+	for range ticker2.C {
+		fmt.Printf("trying count %d \n", balance.Count)
 	}
+
+	return
+
 }
