@@ -5,12 +5,11 @@ import (
 	zy "myProject/videoCollector/app/zuiyou"
 	"myProject/videoCollector/collector"
 	"myProject/videoCollector/common"
-	"myTool/dataStruct/queue"
 	"time"
 )
 
 type Fetcher interface {
-	Fetch(queue *queue.Queue)
+	Fetch(collector *collector.Collector)
 	Identity() string
 }
 
@@ -22,11 +21,12 @@ type Engine struct {
 
 func NewEngine(conf *common.GlobalCon) *Engine {
 
+	collector := collector.NewCollector()
 	zy := zy.NewEngine(conf)
 	yt := yt.NewEngine(conf)
 	apps := []Fetcher{zy, yt}
 
-	collector := collector.NewCollector()
+
 
 	return &Engine{
 		Apps:      apps,
@@ -61,6 +61,6 @@ func (e *Engine) Stop() {
 
 func (e *Engine) work() {
 	for _, app := range e.Apps {
-		go app.Fetch(e.Collector.Queue)
+		go app.Fetch(e.Collector)
 	}
 }

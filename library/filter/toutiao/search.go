@@ -65,7 +65,7 @@ func SearchKeyword(keyWord string) *TTSearch {
 	fmt.Println(url)
 	header := GetHeader(kw, url)
 	cookie := GetCookies()
-	buffer, err :=request.HttpGet(url, nil, header, cookie)
+	buffer, err :=request.HttpGetBuf(url, nil, header, cookie,"")
 
 	if err != nil {
 		panic(err)

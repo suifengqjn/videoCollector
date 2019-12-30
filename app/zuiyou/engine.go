@@ -2,8 +2,8 @@ package zuiyou
 
 import (
 	"myProject/videoCollector/app/zuiyou/api"
+	"myProject/videoCollector/collector"
 	"myProject/videoCollector/common"
-	"myTool/dataStruct/queue"
 )
 
 type Engine struct {
@@ -15,7 +15,7 @@ func NewEngine(conf *common.GlobalCon) *Engine  {
 	return &Engine{conf:conf}
 }
 
-func (e *Engine)Fetch(queue *queue.Queue)  {
+func (e *Engine)Fetch(collector *collector.Collector)  {
 
 	if !e.conf.Zy.Switch {
 		return
@@ -25,19 +25,14 @@ func (e *Engine)Fetch(queue *queue.Queue)  {
 
 		res := api.GetFavorList()
 
-		for _, r := range res {
-			queue.Push(r)
-		}
+		collector.PushVideos(res)
 
 	}
 
 	if e.conf.Zy.Recommend.Enable {
 
 		res := api.GetRecommend()
-
-		for _, r := range res {
-			queue.Push(r)
-		}
+		collector.PushVideos(res)
 
 	}
 
@@ -45,9 +40,7 @@ func (e *Engine)Fetch(queue *queue.Queue)  {
 
 		res := api.GetAttentionUp()
 
-		for _, r := range res {
-			queue.Push(r)
-		}
+		collector.PushVideos(res)
 
 	}
 

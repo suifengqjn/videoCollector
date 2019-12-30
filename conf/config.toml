@@ -15,7 +15,7 @@ proxy = "127.0.0.1:1086" # 替换自己的的代理地址
     similarity = 0.7 #视频相似度
 
 [zy]
-    switch = true
+    switch = false
     filter = ["t"]
     cookie = "aliyungf_tc=AQAAAHtCl0+LAggALI70ctZO+UPzsFK8"
     token = "T3K1NKOaZ14_QhiQ7KpL9TpjEQQrcm8nuAfDb80_l42mmiMS0c9F9oGokpDXXHCZhv4oO"
@@ -32,3 +32,11 @@ proxy = "127.0.0.1:1086" # 替换自己的的代理地址
     [zy.recommend]  #推荐
     enable = true
     limit = -1
+
+[youtube]
+    switch = true
+    filter = ["t"]
+    keywords = ["视频剪辑"]
+    duration_limit = 5  # 时长限制 单位：分钟
+    time_limit = 2 # 1, 2, 3, 4
+    count = 10

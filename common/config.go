@@ -15,6 +15,7 @@ type GlobalCon struct {
 	Proxy string	`toml:"proxy"`
 	Condition  *Condition `toml:"condition"`
 	Zy         ZuiYou    `toml:"zy"`
+	Youtube    Youtube`toml:"youtube"`
 }
 
 type Condition struct {
@@ -45,6 +46,15 @@ type ZuiYou struct {
 		Enable bool
 		Limit  int
 	}
+}
+
+type Youtube struct {
+	Switch bool
+	Filter   []string
+	Keywords []string
+	DurationLimit int 	`toml:"duration_limit"`
+	TimeLimit int	`toml:"time_limit"`
+	Count int
 }
 
 func ReadConfig()*GlobalCon  {

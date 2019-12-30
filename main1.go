@@ -2,27 +2,22 @@ package main
 
 import (
 	"fmt"
-	"goDemo/Project/ETHWallet/balance"
-	"time"
+	"github.com/rylio/ytdl"
 )
 
 func main() {
-
-	Delta := 100 * time.Millisecond
-
-	for i := 0; i < 3; i++ {
-		ticker := time.NewTicker(Delta)
-		fmt.Println("1")
-		<-ticker.C
-		fmt.Println("2")
-		ticker.Stop()
+	ytdl.Socket5Proxy = "127.0.0.1:1086"
+	vid, err := ytdl.GetVideoInfo("https://www.youtube.com/watch?v=EhPA-t_VewU")
+	if err != nil {
+		fmt.Println("Failed to get video info")
+		return
 	}
+	fmt.Println(vid.Duration.Minutes())
+	fmt.Println(vid.Keywords)
 
-	ticker2 := time.NewTicker(1 * time.Second)
-	for range ticker2.C {
-		fmt.Printf("trying count %d \n", balance.Count)
-	}
 
-	return
+	//file, _ := os.Create(vid.Title + ".mp4")
+	//defer file.Close()
+	//vid.Download(vid.Formats[0], file)
 
 }

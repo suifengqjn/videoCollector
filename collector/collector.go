@@ -2,6 +2,7 @@ package collector
 
 import (
 	"fmt"
+	"log"
 	"myProject/videoCollector/common"
 	"myProject/videoCollector/library/cache/store"
 	"myTool/dataStruct/queue"
@@ -34,10 +35,20 @@ func (c *Collector) Run() {
 		v := c.Queue.Pop()
 
 		video := v.(*common.VideoModel)
+		log.Println("pop",video.Title)
 		c.DealVideos(*video)
 
 	}
 
+}
+
+func(c *Collector)PushVideos(videos []*common.VideoModel)  {
+
+		for _, v := range videos {
+
+			log.Println("push",v.Title)
+			c.Queue.Push(v)
+		}
 }
 
 func (c *Collector) DealVideos(video common.VideoModel) {
