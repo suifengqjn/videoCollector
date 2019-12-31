@@ -3,9 +3,9 @@ package common
 import (
 	"encoding/json"
 	"fmt"
-	"myProject/videoRobot/config"
 	"myTool/annie"
 	"myTool/file"
+	"myTool/ytdl"
 	"net/url"
 	"os"
 	"time"
@@ -13,6 +13,7 @@ import (
 
 type VideoModel struct {
 	Url          string
+	DownLoadUrl  string
 	ID           string
 	Title        string
 	Detail       *VideoDetail
@@ -46,14 +47,18 @@ func (v *VideoModel) DownLoad() (string, error) {
 		_ = os.MkdirAll(v.DownLoadDir, os.ModePerm)
 	}
 
-	_, err := url.Parse(v.Url)
+	u, err := url.Parse(v.Url)
 	if err != nil {
 		return "", err
 	}
 
 	filePath := v.DownLoadDir + "/" + v.Title + ".mp4"
+	if Contains(PxDomains,Domain(u.Host)) {
+		err = ytdl.DownLoad(v.DownLoadUrl, filePath, ReadConfig().Proxy)
+	} else {
+		err = annie.DownLoadUrl(v.DownLoadDir, v.Title, v.Url,"")
+	}
 
-	err = annie.DownLoadUrl(v.DownLoadDir, v.Title, v.Url, ReadConfig().Proxy)
 
 	if err != nil {
 		_ = os.Remove(filePath)
@@ -66,7 +71,7 @@ func (v *VideoModel) DownLoad() (string, error) {
 
 func (v *VideoModel) writeToFile() {
 
-	filePath := v.DownLoadDir + "/" + v.ID + ".txt"
+	filePath := v.DownLoadDir + "/" + v.Title + ".txt"
 
 	f, _ := os.Create(filePath)
 
@@ -94,6 +99,6 @@ func (v *VideoModel) String() string {
 
 func GetDefaultDownDir() string {
 
-	return config.RobotCon.ProjectDir + "/" + time.Now().Format(DownloadTimeFormat) + "/video"
+	return ReadConfig().ProjectDir + "/" + time.Now().Format(DownloadTimeFormat) + "/video"
 
 }

@@ -16,6 +16,7 @@ type GlobalCon struct {
 	Condition  *Condition `toml:"condition"`
 	Zy         ZuiYou    `toml:"zy"`
 	Youtube    Youtube`toml:"youtube"`
+
 }
 
 type Condition struct {
@@ -66,6 +67,8 @@ func ReadConfig()*GlobalCon  {
 		panic(err)
 	}
 
+	conf.ProjectDir, _ = os.Getwd()
+
 	return conf
 
 }
@@ -78,7 +81,7 @@ func ReadDebugConfig()*GlobalCon  {
 	if _, err := toml.DecodeFile(path, &conf); err != nil {
 		panic(err)
 	}
-
+	conf.ProjectDir, _ = os.Getwd()
 	return conf
 
 }

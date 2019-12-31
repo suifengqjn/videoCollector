@@ -33,6 +33,7 @@ func (e *Engine) GetVideoInfo(ID string) *common.VideoModel {
 	}
 	video := common.VideoModel{
 		Url:         url,
+		DownLoadUrl: info.DownLoadUrl,
 		ID:          ID,
 		Title:       info.Title,
 		DownLoadDir: DownloadDir(),
