@@ -48,14 +48,14 @@ func GetFavorList() []*common.VideoModel {
 	"h_ch": "appstore",
 	"h_app": "zuiyou_speed",
 	"c_types": [1],
-	"h_ts": 1569163748588,
+	"h_ts": 1577927714055,
 	"h_av": "1.0.8",
 	"h_nt": 1,
 	"h_did": "3865a9635d0ed344d4a3b478cbeeae0422f8281e",
 	"t": 0,
 	"h_m": 1298829,
-	"h_os": 1240000,
-	"token": "T3K1NKOaZ14_QhiQ7KpL9TpjEQQrcm8nuAfDb80_l42mmiMS0c9F9oGokpDXXHCZhv4oO",
+	"h_os": 1330000,
+	"token": "T9K9NKOaZ14_QhiQ7KpL9TpjEQZ11-o3ah29pE1pxfFF02c44QaotybsuAQWIqinSBe5U",
 	"h_dt": 1
 }
 

@@ -11,14 +11,14 @@ proxy = "127.0.0.1:1086" # 替换自己的的代理地址
     width = 500   #最小宽度
     height = 300  #最小高度
     direction = "h" # v: 竖版视频  h： 横版视频
-    size = [5,30] #视频大小范围 单位：M
-    similarity = 0.7 #视频相似度
+    size = [5,100] #视频大小范围 单位：M
+    similarity = 0.5 #视频相似度
 
 [zy]
     switch = false
     filter = ["t"]
     cookie = "aliyungf_tc=AQAAAHtCl0+LAggALI70ctZO+UPzsFK8"
-    token = "T3K1NKOaZ14_QhiQ7KpL9TpjEQQrcm8nuAfDb80_l42mmiMS0c9F9oGokpDXXHCZhv4oO"
+    token = "T9K9NKOaZ14_QhiQ7KpL9TpjEQZ11-o3ah29pE1pxfFF02c44QaotybsuAQWIqinSBe5U"
 
     [zy.favor]  #收藏
     group = ["素材"]
@@ -39,4 +39,4 @@ proxy = "127.0.0.1:1086" # 替换自己的的代理地址
     keywords = ["娱乐搞笑"]
     duration_limit = 5  # 时长限制 单位：分钟,超出限制不下载
     time_limit = 3 # 1（今天内）, 2（本周内）, 3（本月内）, 4(本年内)
-    count = 10  #单个关键词下载数量
+    count = 100  #单个关键词下载数量

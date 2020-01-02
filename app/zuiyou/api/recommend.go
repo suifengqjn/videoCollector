@@ -50,3 +50,93 @@ func GetRecommend() []*common.VideoModel {
 	}
 
 }
+
+
+/*
+
+https://api.izuiyou.com/index/recommend?sign=bba2cc0b16353c192c54b12567862b2a
+
+refresh
+
+{
+	"direction": "homebutton",
+	"h_model": "iPhone SE",
+	"h_ch": "appstore",
+	"h_ua": "Mozilla\/5.0 (iPhone; CPU iPhone OS 13_3 like Mac OS X) AppleWebKit\/605.1.15 (KHTML, like Gecko) Mobile\/15E148 zuiyou_speed\/1.0.8",
+	"h_app": "zuiyou_speed",
+	"c_types": [1, 7, 8, 11, 20, 21, 22],
+	"h_nt": 1,
+	"h_av": "1.0.8",
+	"tab": "rec",
+	"h_did": "3865a9635d0ed344d4a3b478cbeeae0422f8281e",
+	"filter": "all",
+	"h_os": 1330000,
+	"h_ts": 1577927500143,
+	"h_m": 1298829,
+	"token": "T9K9NKOaZ14_QhiQ7KpL9TpjEQZ11-o3ah29pE1pxfFF02c44QaotybsuAQWIqinSBe5U",
+	"h_idfa": "436C228C-2B0B-42EE-A40B-B8B87CAE1EF7",
+	"h_dt": 1,
+	"sdk_ver": {
+		"tt_aid": "5020119",
+		"tx_aid": "1109416283",
+		"tx": "4.7.6",
+		"tt": "1.9.4"
+	}
+}
+
+
+load
+{
+	"direction": "up",
+	"h_model": "iPhone SE",
+	"h_ch": "appstore",
+	"h_ua": "Mozilla\/5.0 (iPhone; CPU iPhone OS 13_3 like Mac OS X) AppleWebKit\/605.1.15 (KHTML, like Gecko) Mobile\/15E148 zuiyou_speed\/1.0.8",
+	"h_app": "zuiyou_speed",
+	"token": "T9K9NKOaZ14_QhiQ7KpL9TpjEQZ11-o3ah29pE1pxfFF02c44QaotybsuAQWIqinSBe5U",
+	"c_types": [1, 7, 8, 11, 20, 21, 22],
+	"h_nt": 1,
+	"h_av": "1.0.8",
+	"tab": "rec",
+	"h_did": "3865a9635d0ed344d4a3b478cbeeae0422f8281e",
+	"filter": "all",
+	"h_os": 1330000,
+	"auto": 1,
+	"h_ts": 1577927585953,
+	"h_m": 1298829,
+	"h_idfa": "436C228C-2B0B-42EE-A40B-B8B87CAE1EF7",
+	"h_dt": 1,
+	"sdk_ver": {
+		"tt_aid": "5020119",
+		"tx_aid": "1109416283",
+		"tx": "4.7.6",
+		"tt": "1.9.4"
+	}
+}
+
+{
+	"direction": "up",
+	"h_model": "iPhone SE",
+	"h_ch": "appstore",
+	"h_ua": "Mozilla\/5.0 (iPhone; CPU iPhone OS 13_3 like Mac OS X) AppleWebKit\/605.1.15 (KHTML, like Gecko) Mobile\/15E148 zuiyou_speed\/1.0.8",
+	"h_app": "zuiyou_speed",
+	"token": "T9K9NKOaZ14_QhiQ7KpL9TpjEQZ11-o3ah29pE1pxfFF02c44QaotybsuAQWIqinSBe5U",
+	"c_types": [1, 7, 8, 11, 20, 21, 22],
+	"h_nt": 1,
+	"h_av": "1.0.8",
+	"tab": "rec",
+	"h_did": "3865a9635d0ed344d4a3b478cbeeae0422f8281e",
+	"filter": "all",
+	"h_os": 1330000,
+	"auto": 1,
+	"h_ts": 1577927672998,
+	"h_m": 1298829,
+	"h_idfa": "436C228C-2B0B-42EE-A40B-B8B87CAE1EF7",
+	"h_dt": 1,
+	"sdk_ver": {
+		"tt_aid": "5020119",
+		"tx_aid": "1109416283",
+		"tx": "4.7.6",
+		"tt": "1.9.4"
+	}
+}
+*/
