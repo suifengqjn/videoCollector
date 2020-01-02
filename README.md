@@ -31,8 +31,9 @@
 双加打开 `vc.exe` 即可
 
 
-效果图示意：
-![](https://github.com/suifengqjn/videoCollector/blob/master/image/1.png?raw=true)
+## 效果图示意：
+
+![](https://github.com/suifengqjn/videoCollector/blob/master/img/1.png?raw=true)
 
 ## 版本更新
 
@@ -42,5 +43,6 @@
 
 ## 下载说明
 
-添加微信获取软件
+#### 添加微信获取软件
+
 ![](https://github.com/suifengqjn/videoWater/blob/master/image/wechat.jpeg?raw=true)
