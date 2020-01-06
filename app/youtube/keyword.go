@@ -3,6 +3,8 @@ package youtube
 import (
 	"fmt"
 	"github.com/antchfx/htmlquery"
+	html2 "golang.org/x/net/html"
+	"myProject/videoCollector/account"
 	"myProject/videoCollector/collector"
 	"myProject/videoCollector/common"
 	util2 "myTool/util"
@@ -86,7 +88,18 @@ func (e *Engine) GetVideoIds(url string, limit int, index int, videoIds []string
 		}
 	}
 
-	top, err := xpath.FetchHeadCookieProxy(fetchUrl, common.BrowserHeader(), nil, e.conf.Proxy)
+	var top *html2.Node
+	var err error
+	if account.VcAccount.AccType > 0 && len(e.conf.Proxy) == 0 {
+
+		top, err = xpath.FetchWithClient(fetchUrl, common.GetClient(), common.BrowserHeader())
+		if err != nil {
+			common.NewSSR()
+		}
+
+	} else {
+		top, err = xpath.FetchHeadCookieProxy(fetchUrl, common.BrowserHeader(), nil, e.conf.Proxy)
+	}
 
 	if err != nil {
 		return e.GetVideoIds(url, limit, index+1, videoIds, channel)

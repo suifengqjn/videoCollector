@@ -15,15 +15,22 @@ import (
 
 func main() {
 
+	fmt.Println("读取配置文件...")
+	conf := common.ReadConfig()
+	if conf == nil {
+		time.Sleep(time.Second * 5)
+	} else {
+		fmt.Println(conf)
+	}
+
 	if !check() {
+		time.Sleep(time.Second * 5)
 		return
 	}
 
-	conf := common.ReadConfig()
-	fmt.Println(conf)
+	fmt.Println("开始采集...")
 
 	eng := engine.NewEngine(conf)
-
 	go func() {
 		sig := make(chan os.Signal, 1)
 
@@ -34,7 +41,7 @@ func main() {
 		eng.Stop()
 		os.Exit(1)
 	}()
-
+	eng.Init()
 	eng.Run()
 
 }

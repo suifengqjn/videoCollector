@@ -1,6 +1,8 @@
 package engine
 
 import (
+	"fmt"
+	"myProject/videoCollector/account"
 	yt "myProject/videoCollector/app/youtube"
 	zy "myProject/videoCollector/app/zuiyou"
 	"myProject/videoCollector/collector"
@@ -14,6 +16,7 @@ type Fetcher interface {
 }
 
 type Engine struct {
+	Account    *account.Account
 	Apps      []Fetcher
 	Collector *collector.Collector
 	conf      *common.GlobalCon
@@ -26,15 +29,23 @@ func NewEngine(conf *common.GlobalCon) *Engine {
 	yt := yt.NewEngine(conf)
 	apps := []Fetcher{zy, yt}
 
-
+	fmt.Println("初始化...")
 
 	return &Engine{
+		Account:account.GetAccount(),
 		Apps:      apps,
 		Collector: collector,
 		conf:      conf,
 	}
 
 }
+func (e *Engine) Init() {
+	if e.Account.AccType > 0 {
+		common.LoadSSRAccounts()
+		common.NewSSR()
+	}
+}
+
 
 func (e *Engine) Run() {
 
@@ -49,7 +60,8 @@ func (e *Engine) Run() {
 			e.work()
 
 		} else {
-			time.Sleep(time.Hour)
+			//time.Sleep(time.Hour)
+			e.work()
 		}
 	}
 

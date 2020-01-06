@@ -1,8 +1,16 @@
 package common
 
+import "errors"
+
 const (
 	DownloadTimeFormat = "2006-01-02-15"
 	PlatZY = "zuiyou"
+
+)
+
+var (
+	ProxyError = errors.New("ProxyError")
+
 
 )
 

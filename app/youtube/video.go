@@ -2,6 +2,8 @@ package youtube
 
 import (
 	"fmt"
+	yd "github.com/rylio/ytdl"
+	"myProject/videoCollector/account"
 	"myProject/videoCollector/common"
 	"myTool/file"
 	"myTool/ytdl"
@@ -17,8 +19,23 @@ func (e *Engine) GetVideoInfo(ID string) *common.VideoModel {
 
 	url := fmt.Sprintf("https://www.youtube.com/watch?v=%v", ID)
 
-	info, err := ytdl.GetVideoInfo(url, e.conf.Proxy)
+	var info *yd.VideoInfo
+	var err error
+	if account.VcAccount.AccType > 0 && len(e.conf.Proxy) == 0 {
+
+		info, err = ytdl.GetVideoInfoWithClient(url, common.GetClient())
+		if err != nil {
+			common.NewSSR()
+		}
+	} else {
+		info, err = ytdl.GetVideoInfo(url, e.conf.Proxy)
+	}
+
 	if err != nil {
+		return nil
+	}
+
+	if info.Duration.Minutes() > e.durationLimit {
 		return nil
 	}
 

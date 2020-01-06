@@ -1,13 +1,19 @@
 #!/usr/bin/env bash
 
-CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build  -o ./build/win/vc.exe main.go
-CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build -o ./build/mac/vc main.go
+rm -rf ./build/*
 
-rm -f ./win.zip
-rm -f ./mac.zip
+mkdir build/vc_win
+mkdir build/vc_win/conf
 
-cp ./conf/config1.toml ./build/win/
-cp ./conf/config1.toml ./build/mac/
+mkdir build/vc_mac
+mkdir build/vc_mac/conf
 
-zip -q -r win.zip ./build/win
-zip -q -r mac.zip ./build/mac
+cp ./conf/config1.toml ./build/vc_win/conf/config.toml
+cp ./conf/config1.toml ./build/vc_mac/conf/config.toml
+
+CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build  -o ./build/vc_win/vc.exe main.go
+CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build -o ./build/vc_mac/vc main.go
+
+
+zip -q -r win.zip ./build/vc_win
+zip -q -r mac.zip ./build/vc_mac

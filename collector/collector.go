@@ -68,6 +68,6 @@ func (c *Collector) DealVideos(video common.VideoModel) {
 	fmt.Println(path)
 
 	//remove check
-	c.CheckRemove(video, path)
+	c.CheckRemove(path)
 
 }

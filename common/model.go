@@ -3,6 +3,7 @@ package common
 import (
 	"encoding/json"
 	"fmt"
+	"myProject/videoCollector/account"
 	"myTool/annie"
 	"myTool/file"
 	"myTool/ytdl"
@@ -54,7 +55,11 @@ func (v *VideoModel) DownLoad() (string, error) {
 
 	filePath := v.DownLoadDir + "/" + v.Title + ".mp4"
 	if Contains(PxDomains,Domain(u.Host)) {
-		err = ytdl.DownLoad(v.DownLoadUrl, filePath, ReadConfig().Proxy)
+		if account.VcAccount.AccType > 0 {
+			err = DownLoadWithSSR(v.DownLoadUrl, filePath)
+		} else {
+			err = ytdl.DownLoad(v.DownLoadUrl, filePath, ReadConfig().Proxy)
+		}
 	} else {
 		err = annie.DownLoadUrl(v.DownLoadDir, v.Title, v.Url,"")
 	}

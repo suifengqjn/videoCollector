@@ -8,10 +8,9 @@ import (
 	"strings"
 )
 
-func (c *Collector)CheckRemove(video common.VideoModel, path string) {
+func (c *Collector)CheckRemove(path string) {
 
-
-	con := c.getCondition(video)
+	con := c.getCondition()
 	if con == nil {
 		return
 	}
@@ -78,9 +77,6 @@ func (c *Collector)CheckRemove(video common.VideoModel, path string) {
 
 }
 
-func(c *Collector) getCondition(video common.VideoModel) *common.Condition  {
-	if video.Platform == common.PlatZY {
-		return common.ReadConfig().Condition
-	}
-	return nil
+func(c *Collector) getCondition() *common.Condition  {
+	return common.ReadConfig().Condition
 }

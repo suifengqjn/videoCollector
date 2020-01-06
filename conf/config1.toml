@@ -1,42 +1,24 @@
 # 配置文件
-# filter 过滤平台 t:头条 b:bili z:最右
-# limit 视频数量 -1 不限制
-title = "视频采集器"
-dbFile = "./db_cache"  #本地存储目录
-black_list = ["华农兄弟"] #标题中含有这些字样，过滤
+
+title = "采集器"
+dbFile = "./db_cache"    #本地存储目录，记录下载过的视频，忽略
 proxy = "127.0.0.1:1086" # 替换自己的的代理地址
 
-# 视频选择条件
+
+key = "abc"
+
+# 视频过滤
 [condition]
-    width = 500   #最小宽度
-    height = 300  #最小高度
-    direction = "h" # v: 竖版视频  h： 横版视频
-    size = [5,30] #视频大小范围 单位：M
-    similarity = 0.7 #视频相似度
-
-[zy]
-    switch = false
-    filter = ["t"]
-    cookie = ""
-    token = ""
-
-    [zy.favor]  #收藏
-    group = ["素材"]
-    enable = true
-    limit = 20
-
-    [zy.attention]  #关注
-    enable = true
-    limit = -1
-
-    [zy.recommend]  #推荐
-    enable = true
-    limit = -1
+    width = 500      # 最小宽度
+    height = 300     # 最小高度
+    direction = "h"  # v: 竖版视频  h： 横版视频
+    size = [5,100]   # 视频大小范围 单位：M
+    similarity = 0.5 # 视频相似度过滤(忽略)
+    black_list = ["华农兄弟","李子柒"] #标题中含有这些字样，过滤
 
 [youtube]
     switch = true
-    filter = ["t"]
-    keywords = ["视频剪辑"]
+    keywords = ["娱乐搞笑", "八卦新闻"] #根据关键词下载自己需要的视频
     duration_limit = 5  # 时长限制 单位：分钟,超出限制不下载
-    time_limit = 2 # 1（今天内）, 2（本周内）, 3（本月内）, 4(本年内)
-    count = 10  #单个关键词下载数量
+    time_limit = 3 # 视频发布时间限制 1（今天内）, 2（本周内）, 3（本月内）, 4(本年内)
+    count = 100  #单个关键词下载数量

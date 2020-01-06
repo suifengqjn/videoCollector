@@ -1,6 +1,7 @@
 package common
 
 import (
+	"fmt"
 	"github.com/BurntSushi/toml"
 	"os"
 )
@@ -10,13 +11,13 @@ var conf *GlobalCon
 type GlobalCon struct {
 	Title      string
 	ProjectDir string
-	DBFile     string    `toml:"dbFile"`
-	BlackList  []string  `toml:"black_list"`
-	Proxy string	`toml:"proxy"`
+	DBFile     string     `toml:"dbFile"`
+	Proxy      string     `toml:"proxy"`
+	Key        string     `toml:"key"`
 	Condition  *Condition `toml:"condition"`
-	Zy         ZuiYou    `toml:"zy"`
-	Youtube    Youtube`toml:"youtube"`
-
+	Zy         ZuiYou     `toml:"zy"`
+	Youtube    Youtube    `toml:"youtube"`
+	BlackList  []string   `toml:"black_list"`
 }
 
 type Condition struct {
@@ -26,7 +27,6 @@ type Condition struct {
 	Size       [2]int
 	Similarity float32
 }
-
 
 type ZuiYou struct {
 	Switch bool
@@ -50,21 +50,21 @@ type ZuiYou struct {
 }
 
 type Youtube struct {
-	Switch bool
-	Filter   []string
-	Keywords []string
-	DurationLimit int 	`toml:"duration_limit"`
-	TimeLimit int	`toml:"time_limit"`
-	Count int
+	Switch        bool
+	Filter        []string
+	Keywords      []string
+	DurationLimit int `toml:"duration_limit"`
+	TimeLimit     int `toml:"time_limit"`
+	Count         int
 }
 
-func ReadConfig()*GlobalCon  {
+func ReadConfig() *GlobalCon {
 	if conf != nil {
-		 return conf
+		return conf
 	}
 
 	if _, err := toml.DecodeFile("./conf/config.toml", &conf); err != nil {
-		panic(err)
+		fmt.Println(err)
 	}
 
 	conf.ProjectDir, _ = os.Getwd()
@@ -73,11 +73,11 @@ func ReadConfig()*GlobalCon  {
 
 }
 
-func ReadDebugConfig()*GlobalCon  {
+func ReadDebugConfig() *GlobalCon {
 	if conf != nil {
 		return conf
 	}
-	path := os.ExpandEnv("$HOME")+ "/go/src/myProject/videoCollector/conf/config.toml"
+	path := os.ExpandEnv("$HOME") + "/go/src/myProject/videoCollector/conf/config.toml"
 	if _, err := toml.DecodeFile(path, &conf); err != nil {
 		panic(err)
 	}

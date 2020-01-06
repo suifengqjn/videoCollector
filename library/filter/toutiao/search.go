@@ -14,19 +14,23 @@ import (
 )
 
 var ttCookie []*http.Cookie
+
+var Enable = false
 func init() {
 	cur, err := os.Getwd()
 	if err != nil {
-		panic(err)
+		fmt.Println(err)
+		return
 	}
 
 	ckPath := fmt.Sprintf("%v/conf/toutiao.json", cur)
 
 	buf, err := ioutil.ReadFile(ckPath)
 	if err != nil {
-		fmt.Println(err)
+		return
 	}
 
+	Enable = true
 	ttCookie = request.ParseCookie(buf)
 	fmt.Println(ttCookie)
 }
