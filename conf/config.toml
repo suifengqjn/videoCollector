@@ -5,7 +5,8 @@ dbFile = "./db_cache"    #本地存储目录，记录下载过的视频，忽略
 #proxy = "127.0.0.1:1086" # 替换自己的的代理地址
 
 
-key = "abc"
+appid = "1d277bf5064932f06ec98af486a578ee"
+
 
 # 视频过滤
 [condition]

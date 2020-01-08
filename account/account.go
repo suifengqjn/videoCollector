@@ -12,16 +12,13 @@ const (
 
 var VcAccount *Account
 
-type Account struct {
-	AccType int
-	Count int64
-	Start string
-	End string
-}
-
-func GetAccount() *Account  {
-	VcAccount = &Account{AccType:VCVIPDAY}
-
+func GetAccount(appId string) *Account  {
+	VcAccount = GetAccountInfo(appId)
 	return VcAccount
 }
 
+func (a *Account)DownloadAction()  {
+
+	a.Count --
+	a.Add()
+}

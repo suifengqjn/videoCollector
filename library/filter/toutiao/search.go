@@ -32,7 +32,6 @@ func init() {
 
 	Enable = true
 	ttCookie = request.ParseCookie(buf)
-	fmt.Println(ttCookie)
 }
 
 //是否已存在类似内容

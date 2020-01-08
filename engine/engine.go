@@ -32,7 +32,7 @@ func NewEngine(conf *common.GlobalCon) *Engine {
 	fmt.Println("初始化...")
 
 	return &Engine{
-		Account:account.GetAccount(),
+		Account:account.VcAccount,
 		Apps:      apps,
 		Collector: collector,
 		conf:      conf,

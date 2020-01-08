@@ -54,9 +54,20 @@ func (v *VideoModel) DownLoad() (string, error) {
 	}
 
 	filePath := v.DownLoadDir + "/" + v.Title + ".mp4"
+
+	var isVIP bool
+	if account.VcAccount.AccType == 0 {
+		isVIP = false
+	} else {
+		isVIP = true
+	}
+
 	if Contains(PxDomains,Domain(u.Host)) {
-		if account.VcAccount.AccType > 0 {
+		if isVIP {
 			err = DownLoadWithSSR(v.DownLoadUrl, filePath)
+			if err == nil {
+				account.VcAccount.DownloadAction()
+			}
 		} else {
 			err = ytdl.DownLoad(v.DownLoadUrl, filePath, ReadConfig().Proxy)
 		}

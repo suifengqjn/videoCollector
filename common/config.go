@@ -10,10 +10,10 @@ var conf *GlobalCon
 
 type GlobalCon struct {
 	Title      string
+	AppID      string     `toml:"appid"`
 	ProjectDir string
 	DBFile     string     `toml:"dbFile"`
 	Proxy      string     `toml:"proxy"`
-	Key        string     `toml:"key"`
 	Condition  *Condition `toml:"condition"`
 	Zy         ZuiYou     `toml:"zy"`
 	Youtube    Youtube    `toml:"youtube"`

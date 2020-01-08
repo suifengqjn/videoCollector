@@ -30,7 +30,7 @@ func LoadSSRAccounts() []string {
 
 func GetClient() *http.Client  {
 
-	return check.MakeClient(CurrentSSR)
+	return check.MakeDownloadClient(CurrentSSR)
 	
 }
 

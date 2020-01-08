@@ -4,29 +4,49 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	account2 "myProject/videoCollector/account"
 	"myProject/videoCollector/common"
 	"myProject/videoCollector/engine"
 	"net/http"
 	"os"
 	"os/signal"
+	"strings"
 	"syscall"
 	"time"
 )
 
+var line = "************************************************************"
 func main() {
 
-	fmt.Println("读取配置文件...")
+
 	conf := common.ReadConfig()
 	if conf == nil {
-		time.Sleep(time.Second * 5)
-	} else {
-		fmt.Println(conf)
-	}
-
-	if !check() {
-		time.Sleep(time.Second * 5)
+		time.Sleep(time.Second * 100)
+		fmt.Println("配置文件出错")
 		return
 	}
+
+	account := account2.GetAccount(conf.AppID)
+	if account == nil {
+		time.Sleep(time.Second * 100)
+		fmt.Println("账户无效")
+		return
+	}
+
+	fmt.Println(line)
+	fmt.Println(line)
+	fmt.Println(line)
+	fmt.Println()
+	fmt.Println()
+	fmt.Println(formatline("账户ID:"+account.AppId))
+	fmt.Println(formatline(account.Msg))
+	fmt.Println(formatline(account.Time))
+	fmt.Println()
+	fmt.Println()
+	fmt.Println(line)
+	fmt.Println(line)
+	fmt.Println(line)
+
 
 	fmt.Println("开始采集...")
 
@@ -43,6 +63,14 @@ func main() {
 	}()
 	eng.Init()
 	eng.Run()
+
+}
+
+func formatline(text string)string  {
+
+
+	r := strings.Repeat(" ", 10)
+	return r + text + r
 
 }
 
