@@ -1,11 +1,12 @@
 # 配置文件
 
-title = "采集器"
+title = "视频采集器"
 dbFile = "./db_cache"    #本地存储目录，记录下载过的视频，忽略
-proxy = "127.0.0.1:1086" # 替换自己的的代理地址
 
+proxy = "" # 免费账户自己填写socks5代理地址
 
-key = "abc"
+appid = "9699ec844b4ece90172401b4da5a3bc9"
+
 
 # 视频过滤
 [condition]
@@ -18,7 +19,7 @@ key = "abc"
 
 [youtube]
     switch = true
-    keywords = ["娱乐搞笑", "八卦新闻"] #根据关键词下载自己需要的视频
+    keywords = ["娱乐搞笑", "八卦新闻","影视剪辑"] #根据关键词下载自己需要的视频
     duration_limit = 5  # 时长限制 单位：分钟,超出限制不下载
     time_limit = 3 # 视频发布时间限制 1（今天内）, 2（本周内）, 3（本月内）, 4(本年内)
     count = 100  #单个关键词下载数量

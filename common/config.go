@@ -17,7 +17,6 @@ type GlobalCon struct {
 	Condition  *Condition `toml:"condition"`
 	Zy         ZuiYou     `toml:"zy"`
 	Youtube    Youtube    `toml:"youtube"`
-	BlackList  []string   `toml:"black_list"`
 }
 
 type Condition struct {
@@ -26,6 +25,8 @@ type Condition struct {
 	Direction  string
 	Size       [2]int
 	Similarity float32
+	BlackList  []string `toml:"black_list"`
+	filter     []string
 }
 
 type ZuiYou struct {

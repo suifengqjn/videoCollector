@@ -54,7 +54,7 @@ func(c *Collector)PushVideos(videos []*common.VideoModel)  {
 func (c *Collector) DealVideos(video common.VideoModel) {
 
 	//download check
-	pass := c.check(video)
+	pass := c.prepareCheck(video)
 	if !pass {
 		return
 	}

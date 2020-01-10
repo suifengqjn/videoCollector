@@ -26,21 +26,26 @@ func main() {
 		return
 	}
 
-	account := account2.GetAccount(conf.AppID)
-	if account == nil {
-		time.Sleep(time.Second * 100)
-		fmt.Println("账户无效")
+	if !check() {
 		return
 	}
+
+	account := account2.GetAccount(conf.AppID)
 
 	fmt.Println(line)
 	fmt.Println(line)
 	fmt.Println(line)
 	fmt.Println()
 	fmt.Println()
-	fmt.Println(formatline("账户ID:"+account.AppId))
-	fmt.Println(formatline(account.Msg))
-	fmt.Println(formatline(account.Time))
+	if account.AccType > 0 {
+		fmt.Println(formatline("账户ID:"+account.AppId))
+		fmt.Println(formatline(account.Msg))
+		fmt.Println(formatline(account.Time))
+	} else {
+		fmt.Println(formatline("免费账户：需要自己配置代理"))
+		fmt.Println(formatline("vip 购买地址："+"https://www.kuaifaka.com/purchasing?link=3ZUpQ"))
+	}
+
 	fmt.Println()
 	fmt.Println()
 	fmt.Println(line)
@@ -67,7 +72,6 @@ func main() {
 }
 
 func formatline(text string)string  {
-
 
 	r := strings.Repeat(" ", 10)
 	return r + text + r

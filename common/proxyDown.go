@@ -7,6 +7,7 @@ import (
 	"myTool/ytdl"
 	"net/http"
 	"strings"
+	"time"
 )
 
 const target = "https://www.youtube.com" 
@@ -28,10 +29,16 @@ func LoadSSRAccounts() []string {
 	return accounts
 }
 
-func GetClient() *http.Client  {
+func GetDownLoadClient() *http.Client  {
 
 	return check.MakeDownloadClient(CurrentSSR)
 	
+}
+
+func GetClient() *http.Client  {
+
+	return check.MakeClient(CurrentSSR, time.Second * 10)
+
 }
 
 func NewSSR()  {
@@ -48,7 +55,7 @@ func NewSSR()  {
 }
 
 func DownLoadWithSSR(url, path string) error  {
-	cli := GetClient()
+	cli := GetDownLoadClient()
 	if cli == nil {
 		return ProxyError
 	}

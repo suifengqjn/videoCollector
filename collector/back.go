@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 )
-
+// 下载后处理
 func (c *Collector)CheckRemove(path string) {
 
 	con := c.getCondition()

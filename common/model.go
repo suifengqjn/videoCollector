@@ -14,7 +14,7 @@ import (
 
 type VideoModel struct {
 	Url          string
-	DownLoadUrl  string
+	DownLoadUrl  string `json:"-"`
 	ID           string
 	Title        string
 	Detail       *VideoDetail
@@ -25,9 +25,9 @@ type VideoModel struct {
 	Up           int
 	Down         int
 	DownLoadDir  string
-	SaveKey      []byte
+	SaveKey      []byte `json:"-"`
 	Pic          string
-	Platform     string
+	Platform     string `json:"-"`
 }
 
 type VideoDetail struct {

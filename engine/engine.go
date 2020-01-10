@@ -1,7 +1,6 @@
 package engine
 
 import (
-	"fmt"
 	"myProject/videoCollector/account"
 	yt "myProject/videoCollector/app/youtube"
 	zy "myProject/videoCollector/app/zuiyou"
@@ -28,8 +27,6 @@ func NewEngine(conf *common.GlobalCon) *Engine {
 	zy := zy.NewEngine(conf)
 	yt := yt.NewEngine(conf)
 	apps := []Fetcher{zy, yt}
-
-	fmt.Println("初始化...")
 
 	return &Engine{
 		Account:account.VcAccount,
