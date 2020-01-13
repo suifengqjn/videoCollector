@@ -1,12 +1,16 @@
 # 配置文件
 
-title = "采集器"
+title = "视频采集器"
 dbFile = "./db_cache"    #本地存储目录，记录下载过的视频，忽略
-proxy = ""  # 免费账户自己填写socks5代理地址
+proxy = "127.0.0.1:1086"  # 免费账户自己填写socks5代理地址
 
 
 appid = "9699ec844b4ece90172401b4da5a3bc9"
 
+
+
+title_length = 30
+desc_lenth = 350
 
 # 视频过滤
 [condition]

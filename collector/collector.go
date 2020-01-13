@@ -1,7 +1,6 @@
 package collector
 
 import (
-	"fmt"
 	"log"
 	"myProject/videoCollector/common"
 	"myProject/videoCollector/library/cache/store"
@@ -64,8 +63,6 @@ func (c *Collector) DealVideos(video common.VideoModel) {
 	if err == nil {
 		_=c.saveRecord(video)
 	}
-
-	fmt.Println(path)
 
 	//remove check
 	c.CheckRemove(path)

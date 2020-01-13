@@ -44,15 +44,30 @@ func (e *Engine) GetVideoInfo(ID string) *common.VideoModel {
 		return nil
 	}
 
+	title := info.Title
+	if common.ReadConfig().TitleLength > 0 {
+		if len(title) > common.ReadConfig().TitleLength {
+			title = title[:common.ReadConfig().TitleLength]
+		}
+	}
+
+	desc := info.Description
+
+	if common.ReadConfig().DescLength > 0 {
+		if len(desc) > common.ReadConfig().DescLength {
+			desc = desc[:common.ReadConfig().DescLength]
+		}
+	}
+
 	detail := common.VideoDetail{
 		Tags: info.Keywords,
-		Desc: info.Description,
+		Desc: desc,
 	}
 	video := common.VideoModel{
 		Url:         url,
 		DownLoadUrl: info.DownLoadUrl,
 		ID:          ID,
-		Title:       info.Title,
+		Title:       title,
 		DownLoadDir: DownloadDir(),
 		SaveKey:     SaveKey(ID),
 		Detail:      &detail,

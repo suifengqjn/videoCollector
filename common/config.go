@@ -9,14 +9,16 @@ import (
 var conf *GlobalCon
 
 type GlobalCon struct {
-	Title      string
-	AppID      string     `toml:"appid"`
-	ProjectDir string
-	DBFile     string     `toml:"dbFile"`
-	Proxy      string     `toml:"proxy"`
-	Condition  *Condition `toml:"condition"`
-	Zy         ZuiYou     `toml:"zy"`
-	Youtube    Youtube    `toml:"youtube"`
+	Title       string
+	AppID       string     `toml:"appid"`
+	ProjectDir  string
+	DBFile      string     `toml:"dbFile"`
+	Proxy       string     `toml:"proxy"`
+	TitleLength int     `toml:"title_length"`
+	DescLength  int     `toml:"desc_length"`
+	Condition   *Condition `toml:"condition"`
+	Zy          ZuiYou     `toml:"zy"`
+	Youtube     Youtube    `toml:"youtube"`
 }
 
 type Condition struct {

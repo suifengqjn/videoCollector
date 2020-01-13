@@ -3,7 +3,7 @@ package common
 import "errors"
 
 const (
-	DownloadTimeFormat = "2006-01-02-15"
+	DownloadTimeFormat = "2006-01-02"
 	PlatZY = "zuiyou"
 
 )
