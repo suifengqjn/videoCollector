@@ -3,7 +3,7 @@ package youtube
 import (
 	"fmt"
 	yd "github.com/rylio/ytdl"
-	"myProject/videoCollector/account"
+	"log"
 	"myProject/videoCollector/common"
 	"myTool/file"
 	"myTool/ytdl"
@@ -21,11 +21,11 @@ func (e *Engine) GetVideoInfo(ID string) *common.VideoModel {
 
 	var info *yd.VideoInfo
 	var err error
-	if account.VcAccount.AccType > 0 && len(e.conf.Proxy) == 0 {
+	if e.proxy {
 
-		info, err = ytdl.GetVideoInfoWithClient(url, common.GetClient())
+		info, err = ytdl.GetVideoInfoWithClient(url, e.client.GetClient())
 		if err != nil {
-			common.NewSSR()
+			e.client.Update()
 		}
 	} else {
 		info, err = ytdl.GetVideoInfo(url, e.conf.Proxy)
@@ -45,18 +45,20 @@ func (e *Engine) GetVideoInfo(ID string) *common.VideoModel {
 	}
 
 	title := info.Title
+	log.Println(title)
+	if e.proxy && len(title) == 0 {
+		e.client.Update()
+		return nil
+	}
 	if common.ReadConfig().TitleLength > 0 {
-		if len(title) > common.ReadConfig().TitleLength {
-			title = title[:common.ReadConfig().TitleLength]
-		}
+
+		title = common.ExtractNumAndChinese(title,common.ReadConfig().TitleLength)
 	}
 
 	desc := info.Description
 
 	if common.ReadConfig().DescLength > 0 {
-		if len(desc) > common.ReadConfig().DescLength {
-			desc = desc[:common.ReadConfig().DescLength]
-		}
+		desc = common.ExtractNumAndChinese(desc,common.ReadConfig().DescLength)
 	}
 
 	detail := common.VideoDetail{
@@ -79,12 +81,24 @@ func (e *Engine) GetVideoInfo(ID string) *common.VideoModel {
 
 func DownloadDir() string {
 
-	dir := "./" + time.Now().Format(common.DownloadTimeFormat)
-	if file.PathExist(dir) == false {
-		_ = os.Mkdir(dir, os.ModePerm)
-
+	dir := common.ReadConfig().Output
+	var err error
+	if len(dir) > 0 {
+		if file.PathExist(dir) == false {
+			err = os.Mkdir(dir, os.ModePerm)
+		}
 	}
-	return dir + "/youtube"
+	if err != nil {
+		dir = "./" + time.Now().Format(common.DownloadTimeFormat)
+		if file.PathExist(dir) == false {
+			_ = os.Mkdir(dir, os.ModePerm)
+
+		}
+		return dir + "/youtube"
+	} else {
+		return dir
+	}
+
 }
 
 func SaveKey(ID string) []byte {

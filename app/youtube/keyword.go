@@ -4,12 +4,12 @@ import (
 	"fmt"
 	"github.com/antchfx/htmlquery"
 	html2 "golang.org/x/net/html"
-	"myProject/videoCollector/account"
 	"myProject/videoCollector/collector"
 	"myProject/videoCollector/common"
 	util2 "myTool/util"
 	"myTool/xpath"
 	"regexp"
+	"time"
 )
 
 /*
@@ -41,6 +41,12 @@ func (e *Engine) FetchKeywords(words []string, count int, collector *collector.C
 
 		for {
 			IDs := <-e.channel
+
+			if e.CanUse() == false {
+				fmt.Println("今日下载次数已用完，请明日再试！")
+				time.Sleep(time.Hour)
+				break
+			}
 			videos := e.getVideosByIds(IDs)
 			if len(videos) > 0{
 				collector.PushVideos(videos)
@@ -79,6 +85,9 @@ var rex = regexp.MustCompile(`watch\?v=([a-zA-Z0-9-_]+)(?:"|)?`)
 
 func (e *Engine) GetVideoIds(url string, limit int, index int, videoIds []string, channel chan []string) []string {
 
+	if e.CanUse() == false {
+		return nil
+	}
 	var fetchUrl = url
 	if len(videoIds) >= int(limit) {
 		return videoIds
@@ -90,11 +99,11 @@ func (e *Engine) GetVideoIds(url string, limit int, index int, videoIds []string
 
 	var top *html2.Node
 	var err error
-	if account.VcAccount.AccType > 0 && len(e.conf.Proxy) == 0 {
+	if e.proxy {
 
-		top, err = xpath.FetchWithClient(fetchUrl, common.GetClient(), common.BrowserHeader())
+		top, err = xpath.FetchWithClient(fetchUrl, e.client.GetClient(), common.BrowserHeader())
 		if err != nil {
-			common.NewSSR()
+			e.client.Update()
 		}
 
 	} else {

@@ -25,7 +25,7 @@ func NewEngine(conf *common.GlobalCon) *Engine {
 
 	collector := collector.NewCollector()
 	zy := zy.NewEngine(conf)
-	yt := yt.NewEngine(conf)
+	yt := yt.NewEngine(conf, account.VcAccount)
 	apps := []Fetcher{zy, yt}
 
 	return &Engine{
@@ -37,10 +37,7 @@ func NewEngine(conf *common.GlobalCon) *Engine {
 
 }
 func (e *Engine) Init() {
-	if e.Account.AccType > 0 {
-		common.LoadSSRAccounts()
-		common.NewSSR()
-	}
+
 }
 
 

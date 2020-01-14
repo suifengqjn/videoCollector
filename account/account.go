@@ -6,6 +6,7 @@ const (
 	VCVIPWEEk
 	VCVIPMONTH
 	VCVIPYEAR
+	VCVIPSUPERVIP
 	)
 
 
@@ -19,6 +20,15 @@ func GetAccount(appId string) *Account  {
 
 func (a *Account)DownloadAction()  {
 
-	a.Count --
-	a.Add()
+	if a.AccType <= 0 || a.AccType == VCVIPSUPERVIP{
+		return
+	}
+
+	a.Lock.Lock()
+	defer a.Lock.Unlock()
+	err := a.addCount()
+	if err == nil {
+		a.Count --
+	}
+
 }

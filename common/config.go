@@ -16,6 +16,7 @@ type GlobalCon struct {
 	Proxy       string     `toml:"proxy"`
 	TitleLength int     `toml:"title_length"`
 	DescLength  int     `toml:"desc_length"`
+	Output      string	`toml:"output"`
 	Condition   *Condition `toml:"condition"`
 	Zy          ZuiYou     `toml:"zy"`
 	Youtube     Youtube    `toml:"youtube"`

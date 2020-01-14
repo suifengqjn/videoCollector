@@ -42,7 +42,7 @@ func main() {
 		fmt.Println(formatline(account.Msg))
 		fmt.Println(formatline(account.Time))
 	} else {
-		fmt.Println(formatline("免费账户：需要自己配置代理"))
+		fmt.Println(formatline("免费账户：需要自己配置代理, vip可直接下载"))
 		fmt.Println(formatline("vip 购买地址："+"https://www.kuaifaka.com/purchasing?link=3ZUpQ"))
 	}
 
