@@ -14,25 +14,14 @@ type Engine struct {
 	channel chan []string
 	client *common.ClientManager
 	account *account.Account
-	proxy bool
 }
 
 func NewEngine(conf *common.GlobalCon,acc *account.Account) *Engine  {
 
 	channel := make(chan []string, 200)
-	cli := common.NewClientManager()
+	cli := common.NewClientManager(acc.AccType > 0)
 	e := &Engine{conf:conf,durationLimit:60.0, channel:channel,client:cli, account:acc}
-	e.SetProxy()
 	return e
-}
-
-func (e *Engine)SetProxy()  {
-
-	if account.VcAccount.AccType > 0 {
-		e.proxy = true
-	} else {
-		e.proxy = false
-	}
 }
 
 func (e *Engine)Fetch(collector *collector.Collector)  {
@@ -42,6 +31,7 @@ func (e *Engine)Fetch(collector *collector.Collector)  {
 		keyWords := e.conf.Youtube.Keywords
 		count := e.conf.Youtube.Count
 
+		e.FetchPageVideos(e.conf.Youtube.Pages, collector)
 		e.FetchKeywords(keyWords, count, collector)
 	}
 

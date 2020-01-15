@@ -6,7 +6,6 @@ import (
 	"myProject/videoCollector/account"
 	"myTool/annie"
 	"myTool/file"
-	"myTool/ytdl"
 	"net/url"
 	"os"
 	"time"
@@ -55,21 +54,10 @@ func (v *VideoModel) DownLoad() (string, error) {
 
 	filePath := v.DownLoadDir + "/" + v.Title + ".mp4"
 
-	var isVIP bool
-	if account.VcAccount.AccType == 0 {
-		isVIP = false
-	} else {
-		isVIP = true
-	}
-
 	if Contains(PxDomains,Domain(u.Host)) {
-		if isVIP {
-			err = DownLoadWithSSR(v.DownLoadUrl, filePath)
-			if err == nil {
-				account.VcAccount.DownloadAction()
-			}
-		} else {
-			err = ytdl.DownLoad(v.DownLoadUrl, filePath, ReadConfig().Proxy)
+		err = DownLoadWithSSR(v.DownLoadUrl, filePath)
+		if err == nil {
+			account.VcAccount.DownloadAction()
 		}
 	} else {
 		err = annie.DownLoadUrl(v.DownLoadDir, v.Title, v.Url,"")

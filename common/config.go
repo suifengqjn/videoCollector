@@ -13,8 +13,7 @@ type GlobalCon struct {
 	AppID       string     `toml:"appid"`
 	ProjectDir  string
 	DBFile      string     `toml:"dbFile"`
-	Proxy       string     `toml:"proxy"`
-	TitleLength int     `toml:"title_length"`
+	TitleLength int      `toml:"title_length"`
 	DescLength  int     `toml:"desc_length"`
 	Output      string	`toml:"output"`
 	Condition   *Condition `toml:"condition"`
@@ -57,9 +56,10 @@ type Youtube struct {
 	Switch        bool
 	Filter        []string
 	Keywords      []string
-	DurationLimit int `toml:"duration_limit"`
+	DurationLimit []int `toml:"duration_limit"`
 	TimeLimit     int `toml:"time_limit"`
 	Count         int
+	Pages []string`toml:"pages"`
 }
 
 func ReadConfig() *GlobalCon {

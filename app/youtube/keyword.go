@@ -26,8 +26,31 @@ var timeLimit = map[int]string{
 	4: "&sp=EgQIBRAB",
 }
 
+/*
+1 video
+2 playlist
+3 movie
+4 show
+*/
+var videoType = map[int]string{
+	1: "&sp=EgIQAQ%253D%253D",
+	2: "&sp=EgIQAw%253D%253D",
+	3: "&sp=EgIQBA%253D%253D",
+	4: "&sp=EgIQBQ%253D%253D",
+}
+/*
+1 小于 4 minutes
+2 大于 20 minute
+*/
+var durationLimit = map[int]string {
+	1:"&sp=EgIYAQ%253D%253D",
+	2:"&sp=EgIYAg%253D%253D",
+
+}
+
 func (e *Engine) getTimeLimit() string {
 	if e.conf.Youtube.TimeLimit > 0 {
+
 		if _, ok := timeLimit[e.conf.Youtube.TimeLimit]; ok {
 			return timeLimit[e.conf.Youtube.TimeLimit]
 		}
@@ -64,6 +87,11 @@ func (e *Engine) FetchKeywords(words []string, count int, collector *collector.C
 func (e *Engine) fetchOneKeyword(word string, count int, channel chan []string) {
 
 	url := fmt.Sprintf("https://www.youtube.com/results?search_query=%v", word) + e.getTimeLimit()
+
+	if len(e.conf.Youtube.DurationLimit) == 2 {
+		url += durationLimit[e.conf.Youtube.DurationLimit[1]]
+	}
+
 	e.GetVideoIds(url, count, 1, nil, channel)
 
 }
@@ -85,6 +113,11 @@ var rex = regexp.MustCompile(`watch\?v=([a-zA-Z0-9-_]+)(?:"|)?`)
 
 func (e *Engine) GetVideoIds(url string, limit int, index int, videoIds []string, channel chan []string) []string {
 
+	time.Sleep(time.Second)
+	if collector.Queue.Queue.Len() > 20 {
+		time.Sleep(time.Second * 5)
+	}
+
 	if e.CanUse() == false {
 		return nil
 	}
@@ -99,15 +132,9 @@ func (e *Engine) GetVideoIds(url string, limit int, index int, videoIds []string
 
 	var top *html2.Node
 	var err error
-	if e.proxy {
-
-		top, err = xpath.FetchWithClient(fetchUrl, e.client.GetClient(), common.BrowserHeader())
-		if err != nil {
-			e.client.Update()
-		}
-
-	} else {
-		top, err = xpath.FetchHeadCookieProxy(fetchUrl, common.BrowserHeader(), nil, e.conf.Proxy)
+	top, err = xpath.FetchWithClient(fetchUrl, e.client.GetClient(), common.BrowserHeader())
+	if err != nil || top == nil{
+		e.client.Update()
 	}
 
 	if err != nil {

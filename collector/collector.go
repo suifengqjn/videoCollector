@@ -12,19 +12,23 @@ type Collector struct {
 	store *store.DB
 }
 
+var Queue *Collector
+
 func NewCollector() *Collector {
 
 	db, err := store.OpenDB(common.ReadConfig().DBFile)
 	if err != nil {
 		panic("数据库路径错误")
 	}
-	return &Collector{Queue: queue.NewQueue(), store: db}
+	Queue = &Collector{Queue: queue.NewQueue(), store: db}
+	return Queue
 }
 
 func (c *Collector) Run() {
 
 	for {
 
+		time.Sleep(time.Second)
 		if c.Queue.IsEmpty() {
 			time.Sleep(time.Second)
 			continue

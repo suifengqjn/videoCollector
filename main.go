@@ -37,13 +37,15 @@ func main() {
 	fmt.Println(line)
 	fmt.Println()
 	fmt.Println()
-	if account.AccType > 0 {
+	if account.AccType < 0 {
+		fmt.Println(formatline(""))
+		//fmt.Println(formatline("vip 购买地址："+"https://www.kuaifaka.com/purchasing?link=3ZUpQ"))
+		time.Sleep(time.Second * 100)
+		fmt.Println("无效账户")
+	} else {
 		fmt.Println(formatline("账户ID:"+account.AppId))
 		fmt.Println(formatline(account.Msg))
 		fmt.Println(formatline(account.Time))
-	} else {
-		fmt.Println(formatline("免费账户：需要自己配置代理, vip可直接下载"))
-		fmt.Println(formatline("vip 购买地址："+"https://www.kuaifaka.com/purchasing?link=3ZUpQ"))
 	}
 
 	fmt.Println()
@@ -52,9 +54,7 @@ func main() {
 	fmt.Println(line)
 	fmt.Println(line)
 
-
 	fmt.Println("开始采集...")
-
 	eng := engine.NewEngine(conf)
 	go func() {
 		sig := make(chan os.Signal, 1)
@@ -153,7 +153,7 @@ func check() bool {
 	}
 	var msg Message
 	for _, d := range res {
-		if d.Title == "1.0" {
+		if d.Title == "2.0" {
 			err = json.Unmarshal([]byte(d.Body), &msg)
 			break
 		}

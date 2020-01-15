@@ -1,9 +1,12 @@
 package common
 
 import (
+	"io/ioutil"
 	"myTool/proxyClient"
+	"myTool/ssrClient/check"
 	"myTool/ytdl"
 	"net/http"
+	"strings"
 	"time"
 )
 
@@ -14,12 +17,22 @@ type ClientManager struct {
 	Client *proxyClient.ProxyClient
 }
 
-func NewClientManager() *ClientManager {
+func NewClientManager(vip bool) *ClientManager {
+
+	local := readLocalSSR()
+	var free bool
+	if vip {
+		free = false
+	} else {
+		free = true
+	}
+
 	target := "https://www.youtube.com"
-	proC, err := proxyClient.NewProxyClient(target)
+	proC, err := proxyClient.NewProxyClientFree(target, free)
 	if err != nil {
 		panic("网络不可用")
 	}
+	proC.AddAdditional(local)
 	Client = &ClientManager{target, proC}
 	return Client
 }
@@ -44,57 +57,25 @@ func DownLoadWithSSR(url, path string) error  {
 	err := ytdl.DownLoadWithClient(url, path, cli)
 	return err
 }
-//
-//
-//const target = "https://www.youtube.com"
-//var accounts []string
-//
-//var CurrentSSR string
-//func LoadSSRAccounts() []string {
-//
-//	if len(accounts) > 0 {
-//		return accounts
-//	}
-//	str := client.GetAPISSRAccount()
-//	decodeBytes, err := base64.StdEncoding.DecodeString(str)
-//	if err != nil {
-//		return nil
-//	}
-//
-//	accounts= strings.Split(string(decodeBytes), "\n")
-//	return accounts
-//}
-//
-//func GetDownLoadClient() *http.Client  {
-//
-//	return check.MakeDownloadClient(CurrentSSR)
-//
-//}
-//
-//func GetClient() *http.Client  {
-//
-//	return check.MakeClient(CurrentSSR, time.Second * 10)
-//
-//}
-//
-//func NewSSR()  {
-//	accs := LoadSSRAccounts()
-//	var cli *http.Client
-//	for _, a := range accs {
-//		cli = check.CheckClient(a, target)
-//		if cli != nil {
-//
-//			CurrentSSR = a
-//			break
-//		}
-//	}
-//}
-//
-//func DownLoadWithSSR(url, path string) error  {
-//	cli := GetDownLoadClient()
-//	if cli == nil {
-//		return ProxyError
-//	}
-//	err := ytdl.DownLoadWithClient(url, path, cli)
-//	return err
-//}
+
+func readLocalSSR() []string  {
+	buf, err := ioutil.ReadFile("./conf/ssr.txt")
+	if err != nil {
+		return nil
+	}
+
+	arr := strings.Split(string(buf), "\n")
+	if len(arr) > 0 {
+		var res []string
+		for _, s := range arr {
+			if strings.HasPrefix(s, "ssr://") {
+				if check.CheckUseful(s) {
+					res = append(res, s)
+				}
+			}
+		}
+		return res
+	} else {
+		return nil
+	}
+}

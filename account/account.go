@@ -1,13 +1,11 @@
 package account
 
 const (
-	VCFREE = iota
-	VCVIPDAY
-	VCVIPWEEk
+	VCBASE = iota
 	VCVIPMONTH
 	VCVIPYEAR
 	VCVIPSUPERVIP
-	)
+)
 
 
 
