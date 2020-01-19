@@ -1,0 +1,28 @@
+# 配置文件
+
+title = "视频采集器"
+appid = "f0de18a81219994b767ff3ad83f69028"
+
+dbFile = "./db_cache"    #本地存储目录，记录下载过的视频，忽略
+
+title_length = 30
+desc_lenth = 350
+
+# 视频存放目录，可以为空
+output = ""
+
+# 视频过滤
+[condition]
+    width = 500      # 最小宽度
+    height = 300     # 最小高度
+    direction = "h"  # v: 竖版视频  h： 横版视频
+    size = [5,100]   # 视频大小范围 单位：M
+    black_list = ["华农兄弟","李子柒","抖音"] #标题中含有这些字样，过滤
+
+[youtube]
+    switch = true
+    keywords = ["娱乐", "搞笑","影视"] #根据关键词下载自己需要的视频
+    duration_limit = [1, 8]  # 时长范围限制 单位：分钟,超出限制不下载
+    time_limit = 3 # 视频发布时间限制 1（今天内）, 2（本周内）, 3（本月内）, 4(本年内)
+    count = 100  #单个关键词下载数量
+    pages = [] #采集自定义页面

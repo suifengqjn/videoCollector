@@ -3,23 +3,25 @@ package main
 import (
 	"fmt"
 	"log"
-	"os/user"
-	"path/filepath"
-
-	. "github.com/kkdai/youtube"
+	"myTool/ytdl"
 )
 
 func main() {
 
-	usr, _ := user.Current()
-	currentDir := fmt.Sprintf("%v/Movies/youtubedr", usr.HomeDir)
-	log.Println("download to dir=", currentDir)
-	y := NewYoutube(true)
-	arg := "https://www.youtube.com/watch?v=aJOTlE1K90k"
-	if err := y.DecodeURL(arg); err != nil {
-		fmt.Println("err:", err)
+	p := "127.0.0.1:1086"
+	vid, err := ytdl.GetVideoInfo("https://www.youtube.com/watch?v=d72zyGLnpIA",p)
+	if err != nil {
+		fmt.Println("Failed to get video info")
+		return
 	}
-	if err := y.StartDownload(filepath.Join(currentDir, "dl.mp4")); err != nil {
-		fmt.Println("err:", err)
-	}
+	fmt.Println(vid.Duration.Minutes())
+	fmt.Println(vid.Keywords)
+
+	path := vid.Title + ".mp4"
+	err = ytdl.DownLoad(vid.DownLoadUrl, path, p)
+	log.Println(err)
+	//file, _ := os.Create(vid.Title + ".mp4")
+	//defer file.Close()
+	//vid.Download(vid.Formats[0], file)
+
 }
