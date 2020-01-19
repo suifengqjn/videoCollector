@@ -9,14 +9,12 @@ import (
 
 var regTitle = regexp.MustCompile("[,。：:!！?\"《》0-9\u4e00-\u9fa5]")
 var regDesc = regexp.MustCompile("[#<>《》,。：:!！?\"【】0-9a-zA-Z\u4e00-\u9fa5]")
+
 func ExtractTitle(str string, len int) string {
 
 	// 1.
 	arr := regTitle.FindAllString(str, -1)
 	str = strings.Join(arr,"")
-	if ChineseLen(str) <= len {
-		return str
-	}
 
 	// 2.
 	if ChineseLen(str) <= len {
@@ -38,12 +36,12 @@ func ExtractTitle(str string, len int) string {
 
 func ExtractDesc(str string, len int) string {
 
+	if strings.Contains(str,"欢迎订阅") {
+		return ""
+	}
 	// 1.
 	arr := regDesc.FindAllString(str, -1)
 	str = strings.Join(arr,"")
-	if ChineseLen(str) <= len {
-		return str
-	}
 
 	// 2.
 	if ChineseLen(str) <= len {
