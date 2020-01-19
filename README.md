@@ -76,5 +76,5 @@ mac 系统：
 
 ## 下载说明
 
-添加微信获取软件
+微信咨询
 ![](https://github.com/suifengqjn/videoWater/blob/master/image/wechat.jpeg?raw=true)
