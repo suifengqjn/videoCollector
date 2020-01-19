@@ -26,10 +26,6 @@ func main() {
 		return
 	}
 
-	if !check() {
-		return
-	}
-
 	account := account2.GetAccount(conf.AppID)
 
 	fmt.Println(line)
@@ -38,10 +34,8 @@ func main() {
 	fmt.Println()
 	fmt.Println()
 	if account.AccType < 0 {
-		fmt.Println(formatline(""))
-		//fmt.Println(formatline("vip 购买地址："+"https://www.kuaifaka.com/purchasing?link=3ZUpQ"))
-		time.Sleep(time.Second * 100)
-		fmt.Println("无效账户")
+		fmt.Println(formatline("无效账户"))
+		fmt.Println(formatline("密钥 购买地址："+"https://www.kuaifaka.com/purchasing?link=3ZUpQ"))
 	} else {
 		fmt.Println(formatline("账户ID:"+account.AppId))
 		fmt.Println(formatline(account.Msg))
@@ -53,7 +47,10 @@ func main() {
 	fmt.Println(line)
 	fmt.Println(line)
 	fmt.Println(line)
-
+	if account.AccType < 0 {
+		time.Sleep(time.Second * 100)
+		return
+	}
 	fmt.Println("开始采集...")
 	eng := engine.NewEngine(conf)
 	go func() {

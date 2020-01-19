@@ -10,6 +10,8 @@ mkdir build/vc_mac/conf
 
 cp ./conf/config1.toml ./build/vc_win/conf/config.toml
 cp ./conf/config1.toml ./build/vc_mac/conf/config.toml
+cp ./conf/ssr1.txt ./build/vc_win/conf/ssr.txt
+cp ./conf/ssr1.txt ./build/vc_mac/conf/ssr.txt
 
 CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build  -o ./build/vc_win/vc.exe main.go
 CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build -o ./build/vc_mac/vc main.go

@@ -1,7 +1,7 @@
 # 配置文件
 
 title = "视频采集器"
-appid = "fd716aad0a86ed60ee0dedbd17e515f3"
+appid = "0ab2800a5a582d2e93cba98822e0f902"
 
 #f0de18a81219994b767ff3ad83f69048
 
@@ -47,7 +47,7 @@ output = ""
 [youtube]
     switch = true
     keywords = ["电视剧预告", "影视预告","影视剪辑"] #根据关键词下载自己需要的视频
-    duration_limit = [1, 8]  # 时长范围限制 单位：分钟,超出限制不下载
-    time_limit = 3 # 视频发布时间限制 1（今天内）, 2（本周内）, 3（本月内）, 4(本年内)
-    count = 100  #单个关键词下载数量
-    pages = ["https://www.youtube.com/channel/UCDK5VFdSV4RD1Co2Wg2-IGw/videos"] #采集自定义页面
+    duration_limit = [1, 4]  # 时长范围限制 单位：分钟,超出限制不下载
+    time_limit = 1 # 视频发布时间限制 1（今天内）, 2（本周内）, 3（本月内）, 4(本年内)
+    count = 200  #单个关键词下载数量
+    pages = [] #采集自定义页面

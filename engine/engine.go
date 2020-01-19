@@ -34,8 +34,8 @@ func NewEngine(conf *common.GlobalCon) *Engine {
 		Collector: collector,
 		conf:      conf,
 	}
-
 }
+
 func (e *Engine) Init() {
 
 }
