@@ -73,8 +73,7 @@ mac 系统：
 ![](https://github.com/suifengqjn/videoCollector/blob/master/image/1.png?raw=true)
 
 
+## 问题资讯
 
-## 下载说明
-
-微信咨询
+微信
 ![](https://github.com/suifengqjn/videoWater/blob/master/image/wechat.jpeg?raw=true)
