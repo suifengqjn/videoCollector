@@ -13,15 +13,15 @@ import (
 	"time"
 )
 
-const remoteHost  = "http://106.12.220.252:8001"
+const remoteHost = "http://106.12.220.252:8001"
 
 type Account struct {
-	AccType int `json:"acc_type"`
-	Count   int `json:"count"`
-	Time    string	`json:"time"`
-	Msg string	`json:"msg"`
-	AppId string `json:"-"`
-	Lock sync.Mutex `json:"-"`
+	AccType int        `json:"acc_type"`
+	Count   int        `json:"count"`
+	Time    string     `json:"time"`
+	Msg     string     `json:"msg"`
+	AppId   string     `json:"-"`
+	Lock    sync.Mutex `json:"-"`
 }
 
 func GetAccountInfo(appId string) *Account {
@@ -34,7 +34,7 @@ func GetAccountInfo(appId string) *Account {
 	param["host"] = sys.GetSysInfo().IP
 	param["app_id"] = appId
 
-	buf, _ :=json.Marshal(param)
+	buf, _ := json.Marshal(param)
 
 	client := &http.Client{}
 	req, err := http.NewRequest(method, url, bytes.NewReader(buf))
@@ -43,7 +43,7 @@ func GetAccountInfo(appId string) *Account {
 		return nil
 	}
 	req.Header.Add("Content-Type", "application/json")
-	req.Header.Add("X-API-KEY", common.MD5String(fmt.Sprintf("%v",time.Now().UTC().UnixNano())))
+	req.Header.Add("X-API-KEY", common.MD5String(fmt.Sprintf("%v", time.Now().UTC().UnixNano())))
 	res, err := client.Do(req)
 	if err != nil {
 		return nil
@@ -51,9 +51,9 @@ func GetAccountInfo(appId string) *Account {
 	defer res.Body.Close()
 	body, err := ioutil.ReadAll(res.Body)
 
-	var acc  = Account{}
+	var acc = Account{}
 
-	err = json.Unmarshal(body,&acc)
+	err = json.Unmarshal(body, &acc)
 	if err != nil {
 		return nil
 	}
@@ -62,7 +62,7 @@ func GetAccountInfo(appId string) *Account {
 	return &acc
 }
 
-func (a *Account)addCount() error  {
+func (a *Account) addCount() error {
 	url := remoteHost + "/vc/count"
 	url += fmt.Sprintf("?sign=%v", sign.MakeApiSign())
 	method := "POST"
@@ -70,7 +70,7 @@ func (a *Account)addCount() error  {
 	param := make(map[string]string)
 	param["app_id"] = a.AppId
 
-	buf, _ :=json.Marshal(param)
+	buf, _ := json.Marshal(param)
 
 	client := &http.Client{}
 	req, err := http.NewRequest(method, url, bytes.NewReader(buf))
@@ -79,7 +79,7 @@ func (a *Account)addCount() error  {
 		return nil
 	}
 	req.Header.Add("Content-Type", "application/json")
-	req.Header.Add("X-API-KEY", common.MD5String(fmt.Sprintf("%v",time.Now().UTC().UnixNano())))
+	req.Header.Add("X-API-KEY", common.MD5String(fmt.Sprintf("%v", time.Now().UTC().UnixNano())))
 	res, err := client.Do(req)
 	if err != nil {
 		return nil
@@ -91,4 +91,39 @@ func (a *Account)addCount() error  {
 		return nil
 	}
 	return err
+}
+
+func CheckVersion() (int, string) {
+	url := remoteHost + "/vc/check"
+	url += fmt.Sprintf("?sign=%v", sign.MakeApiSign())
+	url += fmt.Sprintf("&version=%v", Version)
+	method := "POST"
+
+	client := &http.Client{}
+
+	var param = make(map[string]string)
+	buf, _ := json.Marshal(param)
+	req, err := http.NewRequest(method, url, bytes.NewReader(buf))
+	req.Header.Add("Content-Type", "application/json")
+	req.Header.Add("X-API-KEY", common.MD5String(fmt.Sprintf("%v", time.Now().UTC().UnixNano())))
+	if err != nil {
+
+		return 0, ""
+	}
+	res, err := client.Do(req)
+	if err != nil {
+		return 0, ""
+	}
+	defer res.Body.Close()
+
+	body, err := ioutil.ReadAll(res.Body)
+	type Message struct {
+		Code int    `json:"code"`
+		Msg  string `json:"msg"`
+	}
+	var msg Message
+	_ = json.Unmarshal(body, &msg)
+
+	return msg.Code, msg.Msg
+
 }

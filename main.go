@@ -1,13 +1,10 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	account2 "myProject/videoCollector/account"
 	"myProject/videoCollector/common"
 	"myProject/videoCollector/engine"
-	"net/http"
 	"os"
 	"os/signal"
 	"strings"
@@ -19,13 +16,29 @@ var line = "********************************************************************
 func main() {
 
 
+	// read config
 	conf := common.ReadConfig()
 	if conf == nil {
 		time.Sleep(time.Second * 100)
-		fmt.Println("配置文件出错")
 		return
 	}
 
+	// check version
+	code, msg := account2.CheckVersion()
+	if code != 1 {
+		if len(msg) > 0 {
+			fmt.Println(msg)
+		} else {
+			fmt.Println("请检查网络，稍后再试")
+		}
+		time.Sleep(time.Second * 100)
+		return
+	} else if len(msg) > 0 {
+		fmt.Println(msg)
+		time.Sleep(time.Second * 3)
+	}
+
+	// check account
 	account := account2.GetAccount(conf.AppID)
 
 	fmt.Println(line)
@@ -33,6 +46,7 @@ func main() {
 	fmt.Println(line)
 	fmt.Println()
 	fmt.Println()
+	printInfo()
 	if account.AccType < 0 {
 		fmt.Println(formatline("无效账户"))
 		fmt.Println(formatline("密钥 购买地址："+"https://www.kuaifaka.com/purchasing?link=3ZUpQ"))
@@ -47,10 +61,14 @@ func main() {
 	fmt.Println(line)
 	fmt.Println(line)
 	fmt.Println(line)
+
+	time.Sleep(time.Second * 6)
+
 	if account.AccType < 0 {
 		time.Sleep(time.Second * 100)
 		return
 	}
+
 	fmt.Println("开始采集...")
 	eng := engine.NewEngine(conf)
 	go func() {
@@ -75,96 +93,8 @@ func formatline(text string)string  {
 
 }
 
-type Data []struct {
-	URL           string `json:"url"`
-	RepositoryURL string `json:"repository_url"`
-	LabelsURL     string `json:"labels_url"`
-	CommentsURL   string `json:"comments_url"`
-	EventsURL     string `json:"events_url"`
-	HTMLURL       string `json:"html_url"`
-	ID            int    `json:"id"`
-	NodeID        string `json:"node_id"`
-	Number        int    `json:"number"`
-	Title         string `json:"title"`
-	User          struct {
-		Login             string `json:"login"`
-		ID                int    `json:"id"`
-		NodeID            string `json:"node_id"`
-		AvatarURL         string `json:"avatar_url"`
-		GravatarID        string `json:"gravatar_id"`
-		URL               string `json:"url"`
-		HTMLURL           string `json:"html_url"`
-		FollowersURL      string `json:"followers_url"`
-		FollowingURL      string `json:"following_url"`
-		GistsURL          string `json:"gists_url"`
-		StarredURL        string `json:"starred_url"`
-		SubscriptionsURL  string `json:"subscriptions_url"`
-		OrganizationsURL  string `json:"organizations_url"`
-		ReposURL          string `json:"repos_url"`
-		EventsURL         string `json:"events_url"`
-		ReceivedEventsURL string `json:"received_events_url"`
-		Type              string `json:"type"`
-		SiteAdmin         bool   `json:"site_admin"`
-	} `json:"user"`
-	Labels            []interface{} `json:"labels"`
-	State             string        `json:"state"`
-	Locked            bool          `json:"locked"`
-	Assignee          interface{}   `json:"assignee"`
-	Assignees         []interface{} `json:"assignees"`
-	Milestone         interface{}   `json:"milestone"`
-	Comments          int           `json:"comments"`
-	CreatedAt         time.Time     `json:"created_at"`
-	UpdatedAt         time.Time     `json:"updated_at"`
-	ClosedAt          interface{}   `json:"closed_at"`
-	AuthorAssociation string        `json:"author_association"`
-	Body              string        `json:"body"`
+func printInfo()  {
+	fmt.Println(formatline("视频采集器"))
+	fmt.Println(formatline("软件地址：https://github.com/suifengqjn/videoCollector"))
 }
 
-type Message struct {
-	Code int    `json:"code"`
-	Msg  string `json:"msg"`
-}
-
-func check() bool {
-
-	url := "https://api.github.com/repos/suifengqjn/videoCollector/issues"
-	client := http.Client{Timeout: time.Second * 20}
-	resp, err := client.Get(url)
-	if err != nil {
-		fmt.Println("请检查网络")
-		return false
-	}
-	defer resp.Body.Close()
-
-	buf, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		fmt.Println("请检查网络")
-		return false
-	}
-
-	var res Data
-	err = json.Unmarshal(buf, &res)
-	if err != nil {
-		fmt.Println("请检查网络")
-		return false
-	}
-	var msg Message
-	for _, d := range res {
-		if d.Title == "2.0" {
-			err = json.Unmarshal([]byte(d.Body), &msg)
-			break
-		}
-	}
-
-	if len(msg.Msg) > 0 {
-		fmt.Println("===========================")
-		fmt.Println(msg.Msg)
-		fmt.Println("===========================")
-	}
-
-	if msg.Code == 1 {
-		return true
-	}
-
-	return false
-}

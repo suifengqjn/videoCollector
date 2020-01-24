@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/BurntSushi/toml"
 	"os"
+	"time"
 )
 
 var conf *GlobalCon
@@ -68,7 +69,10 @@ func ReadConfig() *GlobalCon {
 	}
 
 	if _, err := toml.DecodeFile("./conf/config.toml", &conf); err != nil {
+		fmt.Println("配置文件出错，请检查 config.toml")
 		fmt.Println(err)
+		time.Sleep(time.Second * 30)
+		return nil
 	}
 
 	conf.ProjectDir, _ = os.Getwd()
