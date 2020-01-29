@@ -153,7 +153,9 @@ func (e *Engine) GetVideoIds(url string, limit int, index int, videoIds []string
 		temIds = append(temIds, a[1])
 	}
 	temIds = util2.RemoveDuplicateElement(temIds)
-	channel <- temIds
+	if len(temIds) > 0 {
+		channel <- temIds
+	}
 
 	return e.GetVideoIds(url, limit, index+1, videoIds, channel)
 }

@@ -9,6 +9,9 @@ import (
 
 var regTitle = regexp.MustCompile("[,。：:!！?\"《》0-9\u4e00-\u9fa5]")
 var regDesc = regexp.MustCompile("[#<>《》,。：:!！?\"【】0-9a-zA-Z\u4e00-\u9fa5]")
+var regUrl = regexp.MustCompile(`(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]`)
+
+var filterWords = []string{"免費訂閱","欢迎订阅","免费订阅"}
 
 func ExtractTitle(str string, len int) string {
 
@@ -34,17 +37,28 @@ func ExtractTitle(str string, len int) string {
 	
 }
 
-func ExtractDesc(str string, len int) string {
-
-	if strings.Contains(str,"欢迎订阅") {
-		return ""
+func ExtractDesc(str string, l int) string {
+	for _, w := range filterWords {
+		if strings.Contains(str,w) {
+			return ""
+		}
 	}
-	// 1.
+
+	// 1. 去掉网址
+	urls := regUrl.FindAllString(str,-1)
+	if len(urls) > 0 {
+		for _,u := range urls {
+			str = strings.ReplaceAll(str, u,"")
+		}
+	}
+
+
+	// 2. 去掉表情等特殊符号
 	arr := regDesc.FindAllString(str, -1)
 	str = strings.Join(arr,"")
 
 	// 2.
-	if ChineseLen(str) <= len {
+	if ChineseLen(str) <= l {
 		return str
 	}
 
@@ -52,7 +66,7 @@ func ExtractDesc(str string, len int) string {
 	res := ""
 	for _, s := range str {
 		res = fmt.Sprintf("%v%v", res, string(s))
-		if ChineseLen(res) >= len {
+		if ChineseLen(res) >= l {
 			break
 		}
 	}

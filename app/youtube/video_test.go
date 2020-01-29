@@ -3,7 +3,6 @@ package youtube
 import (
 	"fmt"
 	"myProject/videoCollector/account"
-	"myProject/videoCollector/collector"
 	"myProject/videoCollector/common"
 	"testing"
 )
@@ -20,8 +19,9 @@ func TestNewEngine(t *testing.T) {
 
 	fmt.Println(m)
 
-	eng.GetPageVideos([]string{"https://www.youtube.com/channel/UCDK5VFdSV4RD1Co2Wg2-IGw/videos"}, &collector.Collector{})
 
 }
+
+
 
 
