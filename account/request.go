@@ -14,7 +14,7 @@ import (
 )
 
 const remoteHost = "http://106.12.220.252:8001"
-
+//const localHost = "http://127.0.0.1:8001"
 type Account struct {
 	AccType int        `json:"acc_type"`
 	Count   int        `json:"count"`
@@ -31,8 +31,10 @@ func GetAccountInfo(appId string) *Account {
 	url += fmt.Sprintf("?sign=%v", sign.MakeApiSign())
 
 	param := make(map[string]string)
-	param["host"] = sys.GetSysInfo().IP
+	info := sys.GetSysInfo()
+	param["host"] = info.IP
 	param["app_id"] = appId
+	param["device"] = common.MD5String(info.MacAddr)
 
 	buf, _ := json.Marshal(param)
 

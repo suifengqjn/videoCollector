@@ -1,11 +1,14 @@
 package common
 
 import (
+	"encoding/base64"
+	"fmt"
 	"io/ioutil"
 	"myTool/proxyClient"
 	"myTool/ssrClient/check"
 	"myTool/ytdl"
 	"net/http"
+	"os"
 	"strings"
 	"time"
 )
@@ -14,26 +17,39 @@ var Client *ClientManager
 
 type ClientManager struct {
 	Target string
-	Client *proxyClient.ProxyClient
+	Client proxyClient.ProxyClientInter
 }
 
-func NewClientManager(vip bool) *ClientManager {
-
-	local := readLocalSSR()
-	var free bool
-	if vip {
-		free = false
-	} else {
-		free = true
-	}
-
+func NewClientManager(isLocal,vip bool) *ClientManager {
 	target := "https://www.youtube.com"
-	proC, err := proxyClient.NewProxyClientFree(target, free)
-	if err != nil {
-		panic("网络不可用")
+	local := readLocalSSR()
+	if isLocal {
+		if len(local) == 0 {
+			fmt.Println("SSR 账户无效，请在 conf/ssr.txt 文件中写入自己的SSR账户")
+			time.Sleep(time.Hour)
+			os.Exit(1)
+		}
+		proC, _ := proxyClient.NewProxyLocalClient(target,local)
+		Client = &ClientManager{target, proC}
+	} else {
+		var free bool
+		if vip {
+			free = false
+		} else {
+			free = true
+		}
+
+		proC, err := proxyClient.NewProxyClientFree(target, free)
+		if err != nil {
+			fmt.Println("网络异常，请检查网络后再次尝试")
+			time.Sleep(time.Hour)
+			os.Exit(1)
+		}
+		proC.AddAdditional(local)
+		Client = &ClientManager{target, proC}
 	}
-	proC.AddAdditional(local)
-	Client = &ClientManager{target, proC}
+
+
 	return Client
 }
 
@@ -58,6 +74,7 @@ func DownLoadWithSSR(url, path string) error  {
 	return err
 }
 
+// 支持单个ssr 和 订阅地址
 func readLocalSSR() []string  {
 	buf, err := ioutil.ReadFile("./conf/ssr.txt")
 	if err != nil {
@@ -72,10 +89,38 @@ func readLocalSSR() []string  {
 				if check.CheckUseful(s) {
 					res = append(res, s)
 				}
+			} else if strings.HasPrefix(s,"http") {
+				res = append(res, getSubSSR(s)...)
 			}
 		}
 		return res
 	} else {
 		return nil
 	}
+}
+
+func getSubSSR(url string) []string  {
+	res, err := http.Get(url)
+	if err != nil {
+		return nil
+	}
+	defer res.Body.Close()
+
+	buf, err := ioutil.ReadAll(res.Body)
+
+	if err != nil {
+		return nil
+	}
+
+	decodeBytes, err := base64.StdEncoding.DecodeString(string(buf))
+
+	arr := strings.Split(string(decodeBytes), "\n")
+
+	var resArr []string
+	for _, s := range arr {
+		if check.CheckUseful(s) {
+			resArr = append(resArr, s)
+		}
+	}
+	return resArr
 }

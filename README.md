@@ -10,7 +10,8 @@
 
 ## 演示视频教程
 
-[视频教程]()
+[使用教程](https://www.bilibili.com/video/av85960419/)
+[ssr账户添加](https://www.bilibili.com/video/av85960873/)
 
 
 ## 注意事项（请仔细查看）
@@ -25,6 +26,9 @@
 链接:https://pan.baidu.com/s/1b7NM83ii66IaeibfXlNATQ  密码:wfys
 
 
+## 软件下载
+
+链接:https://pan.baidu.com/s/1HmxhEP1cXLByVD8j-0IgTQ  密码:nogq
 
 ## 配置参数的说明
 
@@ -59,9 +63,6 @@ desc_lenth 描述长度限制，可以不填
     pages = [] #采集自定义页面
 ```
 
-## 下载
-
-链接:https://pan.baidu.com/s/10V2pdIr7UkZrcQKAYGJB7Q  密码:qxql
 
 
 ## 版本更新记录
@@ -82,12 +83,11 @@ mac 系统：
 进入软件目录
 终端执行 `./vc`
 
-
 效果图示意：
 ![](https://github.com/suifengqjn/videoCollector/blob/master/image/1.png?raw=true)
 
 
-## 问题资讯
+## 问题咨询
 
 微信
 ![](https://github.com/suifengqjn/videoWater/blob/master/image/wechat.jpeg?raw=true)

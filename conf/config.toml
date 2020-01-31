@@ -1,7 +1,7 @@
 # 配置文件
 
 title = "视频采集器"
-appid = "0ab2800a5a582d2e93cba98822e0f902"
+appid = "6e974b8126ad27181632e69bf9023bbe"
 
 dbFile = "./db_cache"    #本地存储目录，记录下载过的视频，忽略
 

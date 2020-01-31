@@ -103,6 +103,6 @@ func (v *VideoModel) String() string {
 
 func GetDefaultDownDir() string {
 
-	return ReadConfig().ProjectDir + "/" + time.Now().Format(DownloadTimeFormat) + "/video"
+	return ReadConfig().ProjectDir + "/" + time.Now().Format(DownloadTimeFormat)
 
 }

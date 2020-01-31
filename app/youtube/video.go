@@ -26,11 +26,11 @@ func (e *Engine) GetVideoInfo(ID string) *common.VideoModel {
 		e.client.Update()
 	}
 
-	if err != nil {
+	if err != nil || info == nil {
 		return nil
 	}
 
-	if info.Duration.Minutes() > e.durationLimit {
+	if info.Duration > 0 && info.Duration.Minutes() > e.durationLimit {
 		return nil
 	}
 
