@@ -27,6 +27,7 @@ type VideoModel struct {
 	SaveKey      []byte `json:"-"`
 	Pic          string
 	Platform     string `json:"-"`
+	Pass         bool `json:"-"`
 }
 
 type VideoDetail struct {

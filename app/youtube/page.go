@@ -28,6 +28,9 @@ func (e *Engine) FetchPageVideos(pages []string, collector *collector.Collector)
 				break
 			}
 			videos := e.getVideosByIds(IDs)
+			for _, v := range videos {
+				v.Pass = true
+			}
 			if len(videos) > 0 {
 				collector.PushVideos(videos)
 			}

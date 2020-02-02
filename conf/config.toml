@@ -9,7 +9,7 @@ title_length = 30
 desc_lenth = 350
 
 # 视频存放目录，可以为空
-output = ""
+output = "../vm_mac/video"
 
 # 视频过滤
 [condition]
@@ -48,4 +48,5 @@ output = ""
     time_limit = 1 # 视频发布时间限制 1（今天内）, 2（本周内）, 3（本月内）, 4(本年内)
     count = 200  #单个关键词下载数量
     pages = [] #采集自定义页面
+    urls = [] #采集指定视频链接
 
