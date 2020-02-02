@@ -16,5 +16,6 @@
 
 .idea
 build
+vc
 *.zip
 *.json
