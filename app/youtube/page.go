@@ -57,7 +57,7 @@ func (e *Engine) fetchPage(pageUrl string, channel chan []string) {
 	html := htmlquery.OutputHTML(top, true)
 
 	arr := rex.FindAllStringSubmatch(html, -1)
-	var temIds []string
+
 	for _, a := range arr {
 		if len(a) < 2 || len(a[1]) < 8 {
 			continue
@@ -65,6 +65,6 @@ func (e *Engine) fetchPage(pageUrl string, channel chan []string) {
 		videoIds = append(videoIds, a[1])
 	}
 	videoIds = util2.RemoveDuplicateElement(videoIds)
-	channel <- temIds
+	channel <- videoIds
 
 }

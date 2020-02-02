@@ -31,7 +31,7 @@ func NewEngine(conf *common.GlobalCon,acc *account.Account) *Engine  {
 	if acc.AccType == 1 || acc.AccType ==4 {
 		isLocal = true
 	}
-	if acc.AccType == 2 {
+	if acc.AccType == 2 || acc.AccType >= 9 {
 		vip = true
 	}
 
@@ -46,8 +46,8 @@ func (e *Engine)Fetch(collector *collector.Collector)  {
 	if e.conf.Youtube.Switch {
 		keyWords := e.conf.Youtube.Keywords
 		count := e.conf.Youtube.Count
-		e.FetchUrlVideos(e.conf.Youtube.Urls,collector)
-		e.FetchPageVideos(e.conf.Youtube.Pages, collector)
+		go e.FetchUrlVideos(e.conf.Youtube.Urls,collector)
+		go e.FetchPageVideos(e.conf.Youtube.Pages, collector)
 		e.FetchKeywords(keyWords, count, collector)
 	}
 

@@ -1,7 +1,7 @@
 # 配置文件
 
 title = "视频采集器"
-appid = "6e974b8126ad27181632e69bf9023bbe"
+appid = "0ab2800a5a582d2e93cba98822e0f902"
 
 dbFile = "./db_cache"    #本地存储目录，记录下载过的视频，忽略
 
@@ -9,7 +9,10 @@ title_length = 30
 desc_lenth = 350
 
 # 视频存放目录，可以为空
-output = "../vm_mac/video"
+output = "/Users/qianjianeng/Desktop/media/vm_mac/video"
+
+# 定时任务，每隔几个小时采集一次,若不填或者填0，采集一次程序退出
+task = 2
 
 # 视频过滤
 [condition]
@@ -19,7 +22,6 @@ output = "../vm_mac/video"
     size = [5,100]   # 视频大小范围 单位：M
     similarity = 0.5 # 视频相似度过滤(忽略)
     black_list = ["华农兄弟","李子柒"] #标题中含有这些字样，过滤
-    filter = ["t"]
 
 [zy]
 
@@ -42,11 +44,10 @@ output = "../vm_mac/video"
 
 [youtube]
     switch = true
-
-    keywords = ["电视剧预告", "影视预告", "影视剪辑"] #根据关键词下载自己需要的视频
+    keywords = [] #根据关键词下载自己需要的视频
     duration_limit = [1, 4]  # 时长范围限制 单位：分钟,超出限制不下载
     time_limit = 1 # 视频发布时间限制 1（今天内）, 2（本周内）, 3（本月内）, 4(本年内)
     count = 200  #单个关键词下载数量
-    pages = [] #采集自定义页面
+    pages = ["https://www.youtube.com/channel/UCJTt4v9CNELvou5yheEp2Fg/videos"] #采集自定义页面
     urls = [] #采集指定视频链接
 

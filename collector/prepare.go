@@ -10,13 +10,15 @@ import (
 
 func (c *Collector) prepareCheck(video common.VideoModel) bool   {
 
-	if video.Pass {
-		return true
-	}
+
 	// down
 	down := c.hasDownLoad(video)
 	if down {
 		return false
+	}
+
+	if video.Pass {
+		return true
 	}
 
 	//condition

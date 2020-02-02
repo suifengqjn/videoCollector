@@ -45,18 +45,14 @@ func (e *Engine) Run() {
 
 	go e.work()
 	go e.Collector.Run()
-
-	ticker := time.NewTicker(time.Hour)
-
-	for range ticker.C {
-		h := time.Now().Hour()
-		if h >= 9 && h <= 21 {
-			e.work()
-
-		} else {
-			//time.Sleep(time.Hour)
+	e.work()
+	if e.conf.Task > 0 {
+		ticker := time.NewTicker(time.Hour * time.Duration(e.conf.Task))
+		for range ticker.C {
 			e.work()
 		}
+	} else {
+		e.work()
 	}
 
 }
@@ -70,3 +66,4 @@ func (e *Engine) work() {
 		go app.Fetch(e.Collector)
 	}
 }
+

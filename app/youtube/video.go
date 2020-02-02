@@ -85,8 +85,10 @@ func DownloadDir() string {
 	if len(dir) > 0 {
 		if file.PathExist(dir) == false {
 			err = os.MkdirAll(dir, os.ModePerm)
+
 		}
 	}
+
 	if err != nil {
 		dir = "./" + time.Now().Format(common.DownloadTimeFormat)
 		if file.PathExist(dir) == false {

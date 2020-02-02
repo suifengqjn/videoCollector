@@ -14,9 +14,10 @@ type GlobalCon struct {
 	AppID       string     `toml:"appid"`
 	ProjectDir  string
 	DBFile      string     `toml:"dbFile"`
-	TitleLength int      `toml:"title_length"`
-	DescLength  int     `toml:"desc_length"`
-	Output      string	`toml:"output"`
+	TitleLength int        `toml:"title_length"`
+	DescLength  int        `toml:"desc_length"`
+	Output      string     `toml:"output"`
+	Task        int        `toml:"task"`
 	Condition   *Condition `toml:"condition"`
 	Zy          ZuiYou     `toml:"zy"`
 	Youtube     Youtube    `toml:"youtube"`
@@ -58,10 +59,10 @@ type Youtube struct {
 	Filter        []string
 	Keywords      []string
 	DurationLimit []int `toml:"duration_limit"`
-	TimeLimit     int `toml:"time_limit"`
+	TimeLimit     int   `toml:"time_limit"`
 	Count         int
-	Pages []string`toml:"pages"`
-	Urls []string`toml:"urls"`
+	Pages         []string `toml:"pages"`
+	Urls          []string `toml:"urls"`
 }
 
 func ReadConfig() *GlobalCon {

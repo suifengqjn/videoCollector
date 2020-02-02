@@ -69,8 +69,9 @@ func main() {
 		return
 	}
 
-	fmt.Println("开始采集...")
+	fmt.Println("ssr账户检测中...")
 	eng := engine.NewEngine(conf)
+	fmt.Println("开始采集...")
 	go func() {
 		sig := make(chan os.Signal, 1)
 
@@ -83,6 +84,7 @@ func main() {
 	}()
 	eng.Init()
 	eng.Run()
+	select {}
 
 }
 
