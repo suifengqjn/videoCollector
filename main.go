@@ -51,7 +51,7 @@ func main() {
 		fmt.Println(formatline("无效账户"))
 		fmt.Println(formatline("密钥 购买地址："+"https://www.kuaifaka.com/purchasing?link=3ZUpQ"))
 	} else {
-		fmt.Println(formatline("账户ID:"+account.AppId))
+		fmt.Println(formatline(fmt.Sprintf("账户 密钥：%v",account.AppId[:10] + strings.Repeat("*",16))))
 		fmt.Println(formatline(account.Msg))
 		fmt.Println(formatline(account.Time))
 	}

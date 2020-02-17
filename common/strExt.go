@@ -7,11 +7,11 @@ import (
 	"unicode/utf8"
 )
 
-var regTitle = regexp.MustCompile("[,。：:!！?\"《》0-9\u4e00-\u9fa5]")
-var regDesc = regexp.MustCompile("[#<>《》,。：:!！?\"【】0-9a-zA-Z\u4e00-\u9fa5]")
+var regTitle = regexp.MustCompile("[-A-Za-z,。：:!！?\"《》0-9\u4e00-\u9fa5]")
+var regDesc = regexp.MustCompile("[#<>《》,。：:!！?\"【】0-9\u4e00-\u9fa5]")
 var regUrl = regexp.MustCompile(`(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]`)
 
-var filterWords = []string{"免費訂閱","欢迎订阅","免费订阅"}
+var filterWords = []string{"免費訂閱","欢迎订阅","免费订阅","订阅"}
 
 func ExtractTitle(str string, len int) string {
 

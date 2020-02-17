@@ -19,7 +19,6 @@ func TestNewEngine(t *testing.T) {
 
 	fmt.Println(m)
 
-	eng.FetchPageVideos()
 
 
 }

@@ -4,6 +4,7 @@ import (
 	"myProject/videoCollector/common"
 	"myProject/videoCollector/library/cache/store"
 	"myTool/dataStruct/queue"
+	"myTool/mylog"
 	"time"
 )
 
@@ -18,7 +19,7 @@ func NewCollector() *Collector {
 
 	db, err := store.OpenDB(common.ReadConfig().DBFile)
 	if err != nil {
-		panic("数据库路径错误")
+		mylog.LogError("本地数据库打开失败", err)
 	}
 	Queue = &Collector{Queue: queue.NewQueue(), store: db}
 	return Queue

@@ -19,3 +19,4 @@ build
 vc
 *.zip
 *.json
+conf/config.toml

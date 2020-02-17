@@ -17,9 +17,6 @@ func (c *Collector) prepareCheck(video common.VideoModel) bool   {
 		return false
 	}
 
-	if video.Pass {
-		return true
-	}
 
 	//condition
 	condition := common.ReadConfig().Condition
@@ -32,6 +29,11 @@ func (c *Collector) prepareCheck(video common.VideoModel) bool   {
 		}
 
 	}
+
+	if video.Pass {
+		return true
+	}
+
 
 	return c.filterPlatform(video)
 

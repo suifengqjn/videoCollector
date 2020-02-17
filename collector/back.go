@@ -7,8 +7,9 @@ import (
 	"path/filepath"
 	"strings"
 )
+
 // 下载后处理
-func (c *Collector)CheckRemove(path string) {
+func (c *Collector) CheckRemove(path string) {
 
 	con := c.getCondition()
 	if con == nil {
@@ -16,7 +17,7 @@ func (c *Collector)CheckRemove(path string) {
 	}
 
 	var remove = false
-	if common.IsVideo(path) {
+	if ffmpeg.IsVideo(path) {
 
 		info, err := ffmpeg.GetVideoInfo("", path)
 		if err == nil && info != nil {
@@ -77,6 +78,6 @@ func (c *Collector)CheckRemove(path string) {
 
 }
 
-func(c *Collector) getCondition() *common.Condition  {
+func (c *Collector) getCondition() *common.Condition {
 	return common.ReadConfig().Condition
 }

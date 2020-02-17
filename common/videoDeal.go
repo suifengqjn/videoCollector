@@ -7,7 +7,6 @@ import (
 	"path/filepath"
 	"strings"
 )
-
 func CoverToMp4(dir string) string {
 
 	files, _ := file.GetCurrentFiles(dir)
@@ -25,19 +24,7 @@ func CoverToMp4(dir string) string {
 
 }
 
-func IsVideo(path string) bool {
-	if strings.HasSuffix(path, "mp4") {
-		return true
-	} else if strings.HasSuffix(path, "MP4") {
-		return true
-	} else if strings.HasSuffix(path, "flv") {
-		return true
-	} else if strings.HasSuffix(path, "webm") {
-		return true
-	}
 
-	return false
-}
 
 func GetVideoFiles(dir string) []string {
 	files, err := file.GetCurrentFiles(dir)
@@ -47,7 +34,7 @@ func GetVideoFiles(dir string) []string {
 
 	var vfiles []string
 	for _, f := range files {
-		if IsVideo(f) {
+		if ffmpeg.IsVideo(f) {
 			vfiles = append(vfiles, f)
 		}
 	}
@@ -66,7 +53,7 @@ func VideoCutPrepare(con Condition, dir string) {
 
 	var removeArr []string
 	for _, f := range files {
-		if IsVideo(f) {
+		if ffmpeg.IsVideo(f) {
 
 			info, err := ffmpeg.GetVideoInfo("", f)
 			if err == nil && info != nil {
