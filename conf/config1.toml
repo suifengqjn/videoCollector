@@ -11,6 +11,11 @@ desc_lenth = 350
 
 # 视频存放目录，可以为空
 output = ""
+# 定时采集 每隔几小时采集一次
+task = 0
+
+# 是否使用ssr ,如果机器能访问外网，就不用ssr
+ssr = true
 
 # 视频过滤
 [condition]

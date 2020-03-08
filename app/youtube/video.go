@@ -60,13 +60,19 @@ func (e *Engine) GetVideoInfo(ID string) *common.VideoModel {
 		desc = common.ExtractDesc(desc,common.ReadConfig().DescLength)
 	}
 
+	DownLoadUrl := ""
+	if _, ok := info.DownLoadUrls[common.ReadConfig().Condition.Resolution];ok {
+		DownLoadUrl = info.DownLoadUrls[common.ReadConfig().Condition.Resolution]
+	} else {
+		DownLoadUrl = info.DownLoadUrl
+	}
 	detail := common.VideoDetail{
 		Tags: info.Keywords,
 		Desc: desc,
 	}
 	video := common.VideoModel{
 		Url:         url,
-		DownLoadUrl: info.DownLoadUrl,
+		DownLoadUrl: DownLoadUrl,
 		ID:          ID,
 		Title:       title,
 		DownLoadDir: DownloadDir(),
