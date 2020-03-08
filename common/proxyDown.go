@@ -21,6 +21,9 @@ type ClientManager struct {
 }
 
 func NewClientManager(isLocal,vip bool) *ClientManager {
+	if ReadConfig().SSR == false {
+		return &ClientManager{}
+	}
 	target := "https://www.youtube.com"
 	local := readLocalSSR()
 	if isLocal {
