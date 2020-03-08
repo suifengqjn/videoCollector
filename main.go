@@ -24,19 +24,19 @@ func main() {
 	}
 
 	// check version
-	code, msg := account2.CheckVersion()
-	if code != 1 {
-		if len(msg) > 0 {
-			fmt.Println(msg)
-		} else {
-			fmt.Println("请检查网络，稍后再试")
-		}
-		time.Sleep(time.Second * 100)
-		return
-	} else if len(msg) > 0 {
-		fmt.Println(msg)
-		time.Sleep(time.Second * 3)
-	}
+	//code, msg := account2.CheckVersion()
+	//if code != 1 {
+	//	if len(msg) > 0 {
+	//		fmt.Println(msg)
+	//	} else {
+	//		fmt.Println("请检查网络，稍后再试")
+	//	}
+	//	time.Sleep(time.Second * 100)
+	//	return
+	//} else if len(msg) > 0 {
+	//	fmt.Println(msg)
+	//	time.Sleep(time.Second * 3)
+	//}
 
 	// check account
 	account := account2.GetAccount(conf.AppID)

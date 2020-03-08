@@ -4,16 +4,14 @@ import (
 	"myProject/videoCollector/account"
 	"myProject/videoCollector/collector"
 	"myProject/videoCollector/common"
-
-
 )
 
 type Engine struct {
-	conf *common.GlobalCon
+	conf          *common.GlobalCon
 	durationLimit float64
-	channel chan []string
-	client *common.ClientManager
-	account *account.Account
+	channel       chan []string
+	client        *common.ClientManager
+	account       *account.Account
 }
 
 /*
@@ -23,37 +21,33 @@ type Engine struct {
 3 基础版年卡  下载速度较慢 设备数量5  ￥60/月
 4 多人版年卡  自备ssr账户 无设备数量限制  ￥200/月
 */
-func NewEngine(conf *common.GlobalCon,acc *account.Account) *Engine  {
+func NewEngine(conf *common.GlobalCon, acc *account.Account) *Engine {
 
 	channel := make(chan []string, 200)
-	isLocal := false
-	vip := false
-	if acc.AccType == 1 || acc.AccType ==4 {
-		isLocal = true
-	}
+	isLocal := true
+	vip := true
 	if acc.AccType == 2 || acc.AccType >= 9 {
 		vip = true
 	}
 
-	cli := common.NewClientManager(isLocal,vip)
-	e := &Engine{conf:conf,durationLimit:60.0, channel:channel,client:cli, account:acc}
+	cli := common.NewClientManager(isLocal, vip)
+	e := &Engine{conf: conf, durationLimit: 60.0, channel: channel, client: cli, account: acc}
 	return e
 }
 
-func (e *Engine)Fetch(collector *collector.Collector)  {
-
+func (e *Engine) Fetch(collector *collector.Collector) {
 
 	if e.conf.Youtube.Switch {
 		keyWords := e.conf.Youtube.Keywords
 		count := e.conf.Youtube.Count
-		go e.FetchUrlVideos(e.conf.Youtube.Urls,collector)
+		go e.FetchUrlVideos(e.conf.Youtube.Urls, collector)
 		go e.FetchPageVideos(e.conf.Youtube.Pages, collector)
 		e.FetchKeywords(keyWords, count, collector)
 	}
 
 }
 
-func (e *Engine)CanUse()bool  {
+func (e *Engine) CanUse() bool {
 
 	//if e.account.AccType <=0 || e.account.AccType == account.VCVIPSUPERVIP {
 	//	return true
@@ -65,6 +59,6 @@ func (e *Engine)CanUse()bool  {
 
 }
 
-func (e *Engine)Identity()string  {
+func (e *Engine) Identity() string {
 	return "youtube"
 }
