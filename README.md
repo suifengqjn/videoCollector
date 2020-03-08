@@ -27,7 +27,7 @@
 
 ## 软件下载
 
-链接:https://pan.baidu.com/s/1HmxhEP1cXLByVD8j-0IgTQ  密码:nogq
+链接:https://pan.baidu.com/s/1gGemQnNyZUvQMEFul4_VtQ  密码:gx4e
 
 ## 配置参数的说明
 
@@ -83,6 +83,7 @@ desc_lenth 描述长度限制，可以不填
 #### 2.1
 1. 增加定时采集
 2. 增加视频分辨率选择 
+3. 是否使用ssr为可选，如果机器socket5 可访问外网，可以不用ssr
 
 ## 使用
 
