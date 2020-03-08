@@ -58,15 +58,27 @@ func NewClientManager(isLocal,vip bool) *ClientManager {
 }
 
 func (c *ClientManager)GetClient()*http.Client  {
-	return c.Client.MakeClient(time.Second * 30)
+	if ReadConfig().SSR {
+		return c.Client.MakeClient(time.Second * 30)
+	} else {
+		return &http.Client{Timeout:time.Second * 30}
+	}
+
 }
 
 func (c *ClientManager)GetDownLoadClient()*http.Client  {
-	return c.Client.MakeDownLoadClient()
+	if ReadConfig().SSR {
+		return c.Client.MakeDownLoadClient()
+	}
+	return &http.Client{}
+
 }
 
 func (c *ClientManager)Update()  {
-	c.Client.Update()
+	if ReadConfig().SSR {
+		c.Client.Update()
+	}
+
 }
 
 func DownLoadWithSSR(url, path string) error  {

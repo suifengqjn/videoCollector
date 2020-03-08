@@ -43,7 +43,6 @@ func (e *Engine) Init() {
 
 func (e *Engine) Run() {
 
-	go e.work()
 	go e.Collector.Run()
 	e.work()
 	if e.conf.Task > 0 {
@@ -51,8 +50,6 @@ func (e *Engine) Run() {
 		for range ticker.C {
 			e.work()
 		}
-	} else {
-		e.work()
 	}
 
 }

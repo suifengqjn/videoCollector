@@ -18,6 +18,7 @@ type GlobalCon struct {
 	DescLength  int        `toml:"desc_length"`
 	Output      string     `toml:"output"`
 	Task        int        `toml:"task"`
+	SSR         bool       `toml:"ssr"`
 	Condition   *Condition `toml:"condition"`
 	Zy          ZuiYou     `toml:"zy"`
 	Youtube     Youtube    `toml:"youtube"`
@@ -28,6 +29,7 @@ type Condition struct {
 	Height     int
 	Direction  string
 	Size       [2]int
+	Resolution string
 	Similarity float32
 	BlackList  []string `toml:"black_list"`
 	filter     []string

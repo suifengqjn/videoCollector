@@ -69,7 +69,9 @@ func main() {
 		return
 	}
 
-	fmt.Println("ssr账户检测中...")
+	if conf.SSR {
+		fmt.Println("ssr账户检测中...")
+	}
 	eng := engine.NewEngine(conf)
 	fmt.Println("开始采集...")
 	go func() {
