@@ -19,4 +19,6 @@ build
 vc
 *.zip
 *.json
+
+conf/ssr.txt
 conf/config.toml
