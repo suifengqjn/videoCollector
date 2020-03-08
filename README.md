@@ -10,8 +10,7 @@
 
 ## 演示视频教程
 
-[使用教程](https://www.bilibili.com/video/av85960419/)
-[ssr账户添加](https://www.bilibili.com/video/av85960873/)
+[使用教程](https://www.bilibili.com/video/av92898194/)
 
 
 ## 注意事项（请仔细查看）
@@ -64,6 +63,12 @@ desc_lenth 描述长度限制，可以不填
 ```
 
 
+## ssr 账户的添加
+支持两种方式，每添加一个都需要换行
+1. 订阅地址：以 http开头
+2. 单个ssr账户 以ssr开头
+
+建议用第一种
 
 ## 版本更新记录
 
@@ -82,6 +87,7 @@ windows 系统：
 mac 系统：
 进入软件目录
 终端执行 `./vc`
+
 
 效果图示意：
 ![](https://github.com/suifengqjn/videoCollector/blob/master/image/1.png?raw=true)

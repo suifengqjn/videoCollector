@@ -1,5 +1,7 @@
 # 配置文件
 
+# win翻墙客户端下载 https://github.com/shadowsocksrr/shadowsocksr-csharp/releases/download/4.9.2/ShadowsocksR-win-4.9.2.zip
+
 title = "视频采集器"
 appid = ""
 
@@ -23,7 +25,7 @@ output = ""
 [youtube]
     switch = true
     keywords = ["娱乐", "搞笑","影视"] #根据关键词下载自己需要的视频
-    duration_limit = [1, 8]  # 时长范围限制 单位：分钟,超出限制不下载
+    duration_limit = [1, 4]  # 时长范围限制 单位：分钟,超出限制不下载
     time_limit = 3 # 视频发布时间限制 1（今天内）, 2（本周内）, 3（本月内）, 4(本年内)
     count = 100  #单个关键词下载数量
-    pages = [] #采集自定义页面
+    pages = ["https://www.youtube.com/channel/UCz6nsRgmASX_zSV7fGwGmVw/videos"] #采集自定义页面
