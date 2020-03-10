@@ -24,6 +24,7 @@ ssr = true
     width = 500      # 最小宽度
     height = 300     # 最小高度
     direction = "h"  # v: 竖版视频  h： 横版视频
+    resolution = "720p" #指定分辨率  240p 360p 480p 720p 1080p
     size = [5,100]   # 视频大小范围 单位：M
     black_list = ["华农兄弟","李子柒","抖音"] #标题中含有这些字样，过滤
 

@@ -71,6 +71,16 @@ desc_lenth 描述长度限制，可以不填
 
 建议用第一种
 
+## 关注公众号
+
+* 公众号不定期分享密钥
+* 实时推送软件更新
+* 自媒体各种软件资料
+* 分享免费软件
+* 分享编程技术
+![](https://github.com/suifengqjn/demoimages/blob/master/other/block.jpg?raw=true)
+
+
 ## 版本更新记录
 
 #### 1.0
