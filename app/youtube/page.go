@@ -6,7 +6,7 @@ import (
 	html2 "golang.org/x/net/html"
 	"myProject/videoCollector/collector"
 	"myProject/videoCollector/common"
-	util2 "myTool/util"
+	util2 "myTool/common"
 	"myTool/xpath"
 	"time"
 )
