@@ -27,7 +27,7 @@
 
 ## 软件下载
 
-链接:https://pan.baidu.com/s/1gGemQnNyZUvQMEFul4_VtQ  密码:gx4e
+链接:https://pan.baidu.com/s/1vm7Zw1BW1dpBcVvL3mBytA  密码:8mjb
 
 ## 配置参数的说明
 
@@ -110,7 +110,3 @@ mac 系统：
 ![](https://github.com/suifengqjn/videoCollector/blob/master/image/1.png?raw=true)
 
 
-## 问题咨询
-
-微信
-![](https://github.com/suifengqjn/videoWater/blob/master/image/wechat.jpeg?raw=true)

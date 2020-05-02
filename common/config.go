@@ -64,7 +64,7 @@ type Youtube struct {
 	TimeLimit     int   `toml:"time_limit"`
 	Count         int
 	Pages         []string `toml:"pages"`
-	Urls          []string `toml:"urls"`
+	IDs          []string `toml:"IDs"`
 }
 
 func ReadConfig() *GlobalCon {
