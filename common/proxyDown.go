@@ -27,34 +27,17 @@ func NewClientManager(isLocal,vip bool) *ClientManager {
 	target := "https://www.youtube.com"
 	local := readLocalSSR()
 	fmt.Printf("一共读取ssr账户 %v 个, 正在提取有效ssr \n", len(local))
-	if isLocal {
-		if len(local) == 0 {
-			fmt.Println("SSR 账户无效，请在 conf/ssr.txt 文件中写入自己的SSR账户")
-			time.Sleep(time.Hour)
-			os.Exit(1)
-		}
-		proC, _ := proxyClient.NewProxyLocalClient(target,local)
-		if len(proC.Accounts) == 0 {
-			fmt.Println( " 没有有效 ssr,无法采集")
-		}
-		Client = &ClientManager{target, proC}
-	} else {
-		var free bool
-		if vip {
-			free = false
-		} else {
-			free = true
-		}
 
-		proC, err := proxyClient.NewProxyClientFree(target, free)
-		if err != nil {
-			fmt.Println("网络异常，请检查网络后再次尝试")
-			time.Sleep(time.Hour)
-			os.Exit(1)
-		}
-		proC.AddAdditional(local)
-		Client = &ClientManager{target, proC}
+	if len(local) == 0 {
+		fmt.Println("SSR 账户无效，请在 conf/ssr.txt 文件中写入自己的SSR账户")
+		time.Sleep(time.Hour)
+		os.Exit(1)
 	}
+	proC, _ := proxyClient.NewProxyLocalClient(target, local)
+	if len(proC.Accounts) == 0 {
+		fmt.Println(" 没有有效 ssr,无法采集")
+	}
+	Client = &ClientManager{target, proC}
 
 
 	return Client

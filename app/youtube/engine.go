@@ -1,9 +1,9 @@
 package youtube
 
 import (
-	"myProject/videoCollector/account"
 	"myProject/videoCollector/collector"
 	"myProject/videoCollector/common"
+	"myTool/appAccount"
 )
 
 type Engine struct {
@@ -11,24 +11,14 @@ type Engine struct {
 	durationLimit float64
 	channel       chan []string
 	client        *common.ClientManager
-	account       *account.Account
+	account       *appAccount.AppAccount
 }
 
-/*
-0 基础版月卡  下载速度较慢 设备数量3  ￥5/月
-1 多人版月卡  自备ssr账户 无设备数量限制  ￥30/月
-2 稳定版月卡  下载速度较快 设备数量3   ￥30/月
-3 基础版年卡  下载速度较慢 设备数量5  ￥60/月
-4 多人版年卡  自备ssr账户 无设备数量限制  ￥200/月
-*/
-func NewEngine(conf *common.GlobalCon, acc *account.Account) *Engine {
+func NewEngine(conf *common.GlobalCon, acc *appAccount.AppAccount) *Engine {
 
 	channel := make(chan []string, 200)
 	isLocal := true
 	vip := true
-	if acc.AccType == 2 || acc.AccType >= 9 {
-		vip = true
-	}
 
 	cli := common.NewClientManager(isLocal, vip)
 	e := &Engine{conf: conf, durationLimit: 60.0, channel: channel, client: cli, account: acc}

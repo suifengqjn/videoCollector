@@ -61,10 +61,8 @@ func (e *Engine) getTimeLimit() string {
 func (e *Engine) FetchKeywords(words []string, count int, collector *collector.Collector) {
 
 	go func() {
-
 		for {
 			IDs := <-e.channel
-
 			if e.CanUse() == false {
 				fmt.Println("今日下载次数已用完，请明日再试！")
 				time.Sleep(time.Hour)

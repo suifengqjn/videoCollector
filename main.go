@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	account2 "myProject/videoCollector/account"
+	"myProject/videoCollector/account"
 	"myProject/videoCollector/common"
 	"myProject/videoCollector/engine"
 	"os"
@@ -39,7 +39,8 @@ func main() {
 	//}
 
 	// check account
-	account := account2.GetAccount(conf.AppID)
+	appid := account.LoadAppId()
+	account := account.NewAccount(appid, "")
 
 	fmt.Println(line)
 	fmt.Println(line)
@@ -72,7 +73,7 @@ func main() {
 	if conf.SSR {
 		fmt.Println("ssr账户检测中...")
 	}
-	eng := engine.NewEngine(conf)
+	eng := engine.NewEngine(conf, account)
 	fmt.Println("开始采集...")
 	go func() {
 		sig := make(chan os.Signal, 1)

@@ -1,11 +1,11 @@
 package engine
 
 import (
-	"myProject/videoCollector/account"
 	yt "myProject/videoCollector/app/youtube"
 	zy "myProject/videoCollector/app/zuiyou"
 	"myProject/videoCollector/collector"
 	"myProject/videoCollector/common"
+	"myTool/appAccount"
 	"time"
 )
 
@@ -15,21 +15,21 @@ type Fetcher interface {
 }
 
 type Engine struct {
-	Account    *account.Account
+	Account   *appAccount.AppAccount
 	Apps      []Fetcher
 	Collector *collector.Collector
 	conf      *common.GlobalCon
 }
 
-func NewEngine(conf *common.GlobalCon) *Engine {
+func NewEngine(conf *common.GlobalCon, acc *appAccount.AppAccount) *Engine {
 
 	collector := collector.NewCollector()
 	zy := zy.NewEngine(conf)
-	yt := yt.NewEngine(conf, account.VcAccount)
+	yt := yt.NewEngine(conf, acc)
 	apps := []Fetcher{zy, yt}
 
 	return &Engine{
-		Account:account.VcAccount,
+		Account:   acc,
 		Apps:      apps,
 		Collector: collector,
 		conf:      conf,
@@ -39,7 +39,6 @@ func NewEngine(conf *common.GlobalCon) *Engine {
 func (e *Engine) Init() {
 
 }
-
 
 func (e *Engine) Run() {
 
@@ -63,4 +62,3 @@ func (e *Engine) work() {
 		go app.Fetch(e.Collector)
 	}
 }
-
