@@ -16,8 +16,6 @@ func (c *Collector) prepareCheck(video common.VideoModel) bool   {
 	if down {
 		return false
 	}
-
-
 	//condition
 	condition := common.ReadConfig().Condition
 

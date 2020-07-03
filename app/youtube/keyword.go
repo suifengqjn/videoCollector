@@ -97,7 +97,20 @@ func (e *Engine) fetchOneKeyword(word string, count int, channel chan []string) 
 func (e *Engine) getVideosByIds(IDs []string) []*common.VideoModel {
 	var res []*common.VideoModel
 	for _, id := range IDs {
-		v := e.GetVideoInfo(id)
+		v := e.GetVideoInfo(id, "")
+		if v != nil {
+			res = append(res, v)
+		}
+	}
+
+	return res
+}
+
+
+func (e *Engine) getVideosByUrls(Urls []string) []*common.VideoModel {
+	var res []*common.VideoModel
+	for _, url := range Urls {
+		v := e.GetVideoInfo("", url)
 		if v != nil {
 			res = append(res, v)
 		}

@@ -30,7 +30,7 @@ func (e *Engine) Fetch(collector *collector.Collector) {
 	if e.conf.Youtube.Switch {
 		keyWords := e.conf.Youtube.Keywords
 		count := e.conf.Youtube.Count
-		go e.FetchUrlVideos(e.conf.Youtube.IDs, collector)
+		go e.FetchUrlVideos(e.conf.Youtube.Urls, collector)
 		go e.FetchPageVideos(e.conf.Youtube.Pages, collector)
 		e.FetchKeywords(keyWords, count, collector)
 	}

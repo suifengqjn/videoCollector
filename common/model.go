@@ -12,6 +12,7 @@ import (
 type VideoModel struct {
 	Url          string
 	DownLoadUrl  string `json:"-"`
+	DownLoadUrls []string `json:"-"`
 	ID           string
 	Title        string
 	Detail       *VideoDetail
@@ -46,19 +47,18 @@ func (v *VideoModel) DownLoad() (string, error) {
 		_ = os.MkdirAll(v.DownLoadDir, os.ModePerm)
 	}
 
-	u, err := url.Parse(v.Url)
+	_, err := url.Parse(v.Url)
 	if err != nil {
 		return "", err
 	}
 
 	filePath := v.DownLoadDir + "/" + v.Title + ".mp4"
 
-	if Contains(PxDomains,Domain(u.Host)) {
-		_ = DownLoadWithSSR(v.DownLoadUrl, filePath)
-
+	fmt.Println("downloading", v.ID)
+	err = DownLoadWithSSR(v.DownLoadUrl, filePath)
+	if err != nil && len(v.DownLoadUrls) > 0 {
+		err = DownLoadWithSSR(v.DownLoadUrls[0], filePath)
 	}
-
-
 	if err != nil {
 		_ = os.Remove(filePath)
 	} else {

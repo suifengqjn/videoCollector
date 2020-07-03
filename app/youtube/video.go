@@ -3,7 +3,6 @@ package youtube
 import (
 	"fmt"
 	yd "github.com/rylio/ytdl"
-	"log"
 	"myProject/videoCollector/common"
 	"myTool/file"
 	"myTool/ytdl"
@@ -11,13 +10,16 @@ import (
 	"time"
 )
 
-func (e *Engine) GetVideoInfo(ID string) *common.VideoModel {
+func (e *Engine) GetVideoInfo(ID string, url string) *common.VideoModel {
 
 	if err := recover(); err != nil {
 		return nil
 	}
 	time.Sleep(time.Second)
-	url := fmt.Sprintf("https://www.youtube.com/watch?v=%v", ID)
+	if url == "" {
+		url = fmt.Sprintf("https://www.youtube.com/watch?v=%v", ID)
+	}
+
 
 	var info *yd.VideoInfo
 	var err error
@@ -44,7 +46,7 @@ func (e *Engine) GetVideoInfo(ID string) *common.VideoModel {
 	}
 
 	title := info.Title
-	log.Println(title)
+	fmt.Println("spider",title)
 	if len(title) == 0 {
 		e.client.Update()
 		return nil
@@ -66,6 +68,10 @@ func (e *Engine) GetVideoInfo(ID string) *common.VideoModel {
 	} else {
 		DownLoadUrl = info.DownLoadUrl
 	}
+	var ds []string
+	for _ ,v := range info.DownLoadUrls  {
+		ds = append(ds, v)
+	}
 	detail := common.VideoDetail{
 		Tags: info.Keywords,
 		Desc: desc,
@@ -73,6 +79,7 @@ func (e *Engine) GetVideoInfo(ID string) *common.VideoModel {
 	video := common.VideoModel{
 		Url:         url,
 		DownLoadUrl: DownLoadUrl,
+		DownLoadUrls:ds,
 		ID:          ID,
 		Title:       title,
 		DownLoadDir: DownloadDir(),

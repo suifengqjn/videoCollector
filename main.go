@@ -39,8 +39,13 @@ func main() {
 	//}
 
 	// check account
-	appid := account.LoadAppId()
-	account := account.NewAccount(appid, "")
+	if len(conf.AppID) < 10 {
+
+		fmt.Println("请填写app id")
+		time.Sleep(time.Hour)
+		return
+	}
+	account := account.NewAccount(conf.AppID, "")
 
 	fmt.Println(line)
 	fmt.Println(line)

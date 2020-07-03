@@ -31,7 +31,7 @@ func (c *Collector) Run() {
 
 		time.Sleep(time.Second)
 		if c.Queue.IsEmpty() {
-			time.Sleep(time.Second)
+			time.Sleep(time.Second * 5)
 			continue
 		}
 

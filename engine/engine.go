@@ -2,7 +2,6 @@ package engine
 
 import (
 	yt "myProject/videoCollector/app/youtube"
-	zy "myProject/videoCollector/app/zuiyou"
 	"myProject/videoCollector/collector"
 	"myProject/videoCollector/common"
 	"myTool/appAccount"
@@ -24,9 +23,9 @@ type Engine struct {
 func NewEngine(conf *common.GlobalCon, acc *appAccount.AppAccount) *Engine {
 
 	collector := collector.NewCollector()
-	zy := zy.NewEngine(conf)
+	//zy := zy.NewEngine(conf)
 	yt := yt.NewEngine(conf, acc)
-	apps := []Fetcher{zy, yt}
+	apps := []Fetcher{yt}
 
 	return &Engine{
 		Account:   acc,

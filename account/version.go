@@ -1,6 +1,6 @@
 package account
 
 const (
-	Version  = "2.0"
+	Version  = "1.2"
 	dbName = "video_youtube"
 )
