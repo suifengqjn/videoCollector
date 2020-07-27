@@ -76,6 +76,10 @@ func DownLoadWithSSR(url, path string) error  {
 	return err
 }
 
+func DownLoad(url, path string) error {
+	return ytdl.DownLoad(url, path, "")
+}
+
 // 支持单个ssr 和 订阅地址
 func readLocalSSR() []string  {
 	buf, err := ioutil.ReadFile("./conf/ssr.txt")

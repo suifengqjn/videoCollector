@@ -12,10 +12,10 @@ func (c *Collector) prepareCheck(video common.VideoModel) bool   {
 
 
 	// down
-	down := c.hasDownLoad(video)
-	if down {
-		return false
-	}
+	//down := c.hasDownLoad(video)
+	//if down {
+	//	return false
+	//}
 	//condition
 	condition := common.ReadConfig().Condition
 

@@ -2,10 +2,12 @@ package common
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"myTool/file"
 	"net/url"
 	"os"
+	"strings"
 	"time"
 )
 
@@ -13,6 +15,7 @@ type VideoModel struct {
 	Url          string
 	DownLoadUrl  string `json:"-"`
 	DownLoadUrls []string `json:"-"`
+	Mp3Url string `json:"-"`
 	ID           string
 	Title        string
 	Detail       *VideoDetail
@@ -54,11 +57,44 @@ func (v *VideoModel) DownLoad() (string, error) {
 
 	filePath := v.DownLoadDir + "/" + v.Title + ".mp4"
 
-	fmt.Println("downloading", v.ID)
-	err = DownLoadWithSSR(v.DownLoadUrl, filePath)
-	if err != nil && len(v.DownLoadUrls) > 0 {
-		err = DownLoadWithSSR(v.DownLoadUrls[0], filePath)
+	fmt.Println("downloading", v.Title)
+	fmt.Println(v.DownLoadUrl)
+	if ReadConfig().SSR {
+		err = DownLoadWithSSR(v.DownLoadUrl, filePath)
+		if err != nil && len(v.DownLoadUrls) > 0 {
+			err = DownLoadWithSSR(v.DownLoadUrls[0], filePath)
+		}
+	} else {
+		fmt.Println("直接下载",filePath)
+		err = DownLoad(v.DownLoadUrl, filePath)
+		
+		if err != nil {
+			fmt.Println("下载失败",err)
+		} else {
+			info, er := FFMPEG.GetVideoInfo(filePath)
+			if er == nil && info.BgmChannel == "" {
+
+				temp := FFMPEG.MakeRandExportPath("mp4")
+				err := DownLoadWithSSR(v.Mp3Url, temp)
+				if err == nil {
+					bgm := FFMPEG.ExtractBgm(temp)
+					if temp == bgm {
+						return "", errors.New("err")
+					}
+
+					export := strings.TrimSuffix(filePath, ".mp4") + "_1.mp4"
+
+					vbj, err := FFMPEG.AddBgmShortest(filePath, bgm, true)
+					if err == nil {
+						file.CopyFile(vbj, export)
+					}
+
+				}
+
+			}
+		}
 	}
+	fmt.Println("------", err)
 	if err != nil {
 		_ = os.Remove(filePath)
 	} else {

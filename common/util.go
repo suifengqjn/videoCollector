@@ -1,6 +1,10 @@
 package common
 
-import "regexp"
+import (
+	cm "myProject/videoCli/common"
+	"myTool/fmg"
+	"regexp"
+)
 
 var PxDomains = []string{"youtube"}
 
@@ -43,4 +47,13 @@ func MatchOneOf(text string, patterns ...string) []string {
 		}
 	}
 	return nil
+}
+
+
+var FFMPEG *fmg.Fmg
+
+func init() {
+	FFMPEG = cm.GetDefaultFmg(func(msg string, video string) {
+
+	})
 }

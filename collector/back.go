@@ -2,11 +2,12 @@ package collector
 
 import (
 	"myProject/videoCollector/common"
-	"myTool/ffmpeg"
+	"myTool/fmg"
 	"os"
 	"path/filepath"
 	"strings"
 )
+
 
 // 下载后处理
 func (c *Collector) CheckRemove(path string) {
@@ -17,9 +18,9 @@ func (c *Collector) CheckRemove(path string) {
 	}
 
 	var remove = false
-	if ffmpeg.IsVideo(path) {
+	if fmg.IsVideo(path) {
 
-		info, err := ffmpeg.GetVideoInfo("", path)
+		info, err := common.FFMPEG.GetVideoInfo(path)
 		if err == nil && info != nil {
 			//1. 宽高
 			if con.Width > 0 {

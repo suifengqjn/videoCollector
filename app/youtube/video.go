@@ -20,12 +20,18 @@ func (e *Engine) GetVideoInfo(ID string, url string) *common.VideoModel {
 		url = fmt.Sprintf("https://www.youtube.com/watch?v=%v", ID)
 	}
 
-
 	var info *yd.VideoInfo
 	var err error
-	info, err = ytdl.GetVideoInfoWithClient(url, e.client.GetClient())
-	if err != nil {
-		e.client.Update()
+	if common.ReadConfig().SSR {
+		info, err = ytdl.GetVideoInfoWithClient(url, e.client.GetClient())
+		if err != nil {
+			e.client.Update()
+		}
+	} else {
+		info, err = ytdl.GetVideoInfo(url,"")
+		if err != nil {
+			e.client.Update()
+		}
 	}
 
 	if err != nil || info == nil {
@@ -80,6 +86,7 @@ func (e *Engine) GetVideoInfo(ID string, url string) *common.VideoModel {
 		Url:         url,
 		DownLoadUrl: DownLoadUrl,
 		DownLoadUrls:ds,
+		Mp3Url:info.Mp3Url,
 		ID:          ID,
 		Title:       title,
 		DownLoadDir: DownloadDir(),
